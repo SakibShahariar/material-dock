@@ -3,7 +3,7 @@ import Gio from 'gi://Gio';
 import GObject from 'gi://GObject';
 import Gtk from 'gi://Gtk?version=4.0';
 
-import {ExtensionPreferences} from 'resource:///org/gnome/shell/extensions/prefs.js';
+import {ExtensionPreferences} from 'resource:///org/gnome/Shell/Extensions/js/extensions/prefs.js';
 
 function addComboRow(parent, settings, key, title, subtitle, options) {
     const labels = options.map(([label]) => label);
