@@ -36,7 +36,8 @@
     background-color: rgba(255, 255, 255, 0.75);
 }
 
-.material-dock-indicator-dot.active-bar {
+.material-dock-indicator-dot.active-bar,
+.material-dock-indicator-dot.focused {
     background-color: #4c8cff;
     border-radius: 4px;
     border: 1px solid rgba(0, 0, 0, 0.4);
@@ -52,7 +53,8 @@
     background-color: rgba(255, 255, 255, 0.35);
 }
 
-.material-dock-indicator-bar.active {
+.material-dock-indicator-bar.active,
+.material-dock-indicator-bar.focused {
     background-color: #4c8cff;
 }
 
