@@ -23,7 +23,7 @@ function addComboRow(parent, settings, key, title, subtitle, options) {
         if (value)
             settings.set_string(key, value);
     });
-    settings.connectObject(`changed::${key}`, syncFromSettings, row);
+    settings.connect(`changed::${key}`, syncFromSettings);
     syncFromSettings();
     return row;
 }
@@ -36,7 +36,7 @@ function addSpinRow(parent, settings, key, title, subtitle, lower, upper, step) 
     const syncFromSettings = () => row.set_value(settings.get_double(key));
 
     row.connect('notify::value', () => settings.set_double(key, row.get_value()));
-    settings.connectObject(`changed::${key}`, syncFromSettings, row);
+    settings.connect(`changed::${key}`, syncFromSettings);
     syncFromSettings();
     return row;
 }
@@ -51,7 +51,7 @@ function addIntSpinRow(parent, settings, key, title, subtitle, lower, upper, ste
     row.connect('notify::value', () => {
         settings.set_int(key, Math.round(row.get_value()));
     });
-    settings.connectObject(`changed::${key}`, syncFromSettings, row);
+    settings.connect(`changed::${key}`, syncFromSettings);
     syncFromSettings();
     return row;
 }
@@ -62,7 +62,7 @@ function addSwitchRow(parent, settings, key, title, subtitle) {
 
     const syncFromSettings = () => row.set_active(settings.get_boolean(key));
     row.connect('notify::active', () => settings.set_boolean(key, row.get_active()));
-    settings.connectObject(`changed::${key}`, syncFromSettings, row);
+    settings.connect(`changed::${key}`, syncFromSettings);
     syncFromSettings();
     return row;
 }
@@ -231,7 +231,7 @@ export default class MaterialDockPreferences extends ExtensionPreferences {
             entryRow.add_suffix(addBtn);
             folderGroup.add(entryRow);
         };
-        settings.connectObject('changed::folder-stacks', refreshFolders, folderGroup);
+        settings.connect('changed::folder-stacks', refreshFolders);
         refreshFolders();
 
         const groupGroup = new Adw.PreferencesGroup({title: 'App groups',
@@ -262,7 +262,7 @@ export default class MaterialDockPreferences extends ExtensionPreferences {
             groupGroup.add(labelRow);
             groupGroup.add(idsRow);
         };
-        settings.connectObject('changed::app-groups', refreshGroups, groupGroup);
+        settings.connect('changed::app-groups', refreshGroups);
         refreshGroups();
     }
 
