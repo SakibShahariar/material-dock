@@ -67,6 +67,19 @@ function addSwitchRow(parent, settings, key, title, subtitle) {
     return row;
 }
 
+function clearGroupRows(group) {
+    // Adw.PreferencesGroup keeps its rows in an internal box, so
+    // get_first_child()/remove() loops get stuck on internal widgets.
+    // Destroy only the rows we added (ActionRow/EntryRow).
+    let child = group.get_first_child();
+    while (child) {
+        const next = child.get_next_sibling();
+        if (child instanceof Adw.ActionRow || child instanceof Adw.EntryRow)
+            child.destroy();
+        child = next;
+    }
+}
+
 function makeIconButton(iconName, tooltip, onActivate) {
     const btn = new Gtk.Button({
         icon_name: iconName,
@@ -206,11 +219,7 @@ export default class MaterialDockPreferences extends ExtensionPreferences {
         extrasPage.add(folderGroup);
 
         const refreshFolders = () => {
-            let child = folderGroup.get_first_child();
-            while (child) {
-                folderGroup.remove(child);
-                child = folderGroup.get_first_child();
-            }
+            clearGroupRows(folderGroup);
             for (const path of settings.get_strv('folder-stacks'))
                 this._addFolderRow(folderGroup, settings, path);
 
@@ -239,11 +248,7 @@ export default class MaterialDockPreferences extends ExtensionPreferences {
         extrasPage.add(groupGroup);
 
         const refreshGroups = () => {
-            let child = groupGroup.get_first_child();
-            while (child) {
-                groupGroup.remove(child);
-                child = groupGroup.get_first_child();
-            }
+            clearGroupRows(groupGroup);
             for (const entry of settings.get_strv('app-groups'))
                 this._addGroupRow(groupGroup, settings, entry);
 
