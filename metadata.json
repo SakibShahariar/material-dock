@@ -1,0 +1,8 @@
+{
+  "name": "Material Dock",
+  "description": "A highly customizable dock with magnification, minimized window tiles, folder stacks, app groups, and intelligent autohide",
+  "uuid": "material-dock@SakibShahariar",
+  "shell-version": ["47", "48", "49", "50"],
+  "url": "https://github.com/SakibShahariar/material-dock",
+  "version": 1
+}

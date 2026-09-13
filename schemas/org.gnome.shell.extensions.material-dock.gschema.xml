@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist gettext-domain="material-dock">
+  <schema id="org.gnome.shell.extensions.material-dock" path="/org/gnome/shell/extensions/material-dock/">
+    <key name="icon-size" type="i">
+      <default>48</default>
+      <range min="16" max="128"/>
+      <summary>Dock icon size</summary>
+    </key>
+    <key name="running-indicator" type="s">
+      <default>'dots'</default>
+      <choices>
+        <choice value="none"/>
+        <choice value="dots"/>
+        <choice value="bars"/>
+      </choices>
+      <summary>Running indicator style</summary>
+    </key>
+    <key name="magnify-enabled" type="b">
+      <default>true</default>
+      <summary>Enable magnification on hover</summary>
+    </key>
+    <key name="magnify-effect" type="s">
+      <default>'zoom'</default>
+      <choices>
+        <choice value="off"/>
+        <choice value="zoom"/>
+        <choice value="wave"/>
+      </choices>
+      <summary>Magnification effect</summary>
+    </key>
+    <key name="magnify-scale" type="d">
+      <default>1.25</default>
+      <range min="1.0" max="3.0"/>
+      <summary>Magnification scale</summary>
+    </key>
+    <key name="magnify-range" type="i">
+      <default>2</default>
+      <range min="0" max="5"/>
+      <summary>Number of neighbors affected by wave</summary>
+    </key>
+    <key name="dock-position" type="s">
+      <default>'bottom'</default>
+      <choices>
+        <choice value="top"/>
+        <choice value="bottom"/>
+      </choices>
+      <summary>Dock position on screen</summary>
+    </key>
+    <key name="dock-alignment" type="s">
+      <default>'center'</default>
+      <choices>
+        <choice value="start"/>
+        <choice value="center"/>
+        <choice value="end"/>
+      </choices>
+      <summary>Dock alignment along edge</summary>
+    </key>
+    <key name="dock-margin" type="i">
+      <default>4</default>
+      <range min="0" max="200"/>
+      <summary>Dock margin from screen edge</summary>
+    </key>
+    <key name="dock-fixed" type="b">
+      <default>true</default>
+      <summary>Reserve screen space for dock</summary>
+    </key>
+    <key name="autohide-mode" type="s">
+      <default>'intelligent'</default>
+      <choices>
+        <choice value="never"/>
+        <choice value="always"/>
+        <choice value="intelligent"/>
+      </choices>
+      <summary>Autohide behavior</summary>
+    </key>
+    <key name="autohide-timeout" type="i">
+      <default>300</default>
+      <range min="0" max="5000"/>
+      <summary>Autohide hide delay (ms)</summary>
+    </key>
+    <key name="click-action" type="s">
+      <default>'focus-or-minimize'</default>
+      <choices>
+        <choice value="focus"/>
+        <choice value="focus-or-minimize"/>
+        <choice value="toggle-minimize"/>
+        <choice value="cycle-windows"/>
+        <choice value="previews"/>
+        <choice value="launch"/>
+      </choices>
+      <summary>Left-click action on running app</summary>
+    </key>
+    <key name="scroll-action" type="s">
+      <default>'cycle-windows'</default>
+      <choices>
+        <choice value="cycle-windows"/>
+        <choice value="switch-workspace"/>
+        <choice value="nothing"/>
+      </choices>
+      <summary>Scroll action on dock icons</summary>
+    </key>
+    <key name="show-favorites" type="b">
+      <default>true</default>
+      <summary>Show favorite apps</summary>
+    </key>
+    <key name="show-running" type="b">
+      <default>true</default>
+      <summary>Show running apps</summary>
+    </key>
+    <key name="show-show-apps-button" type="b">
+      <default>true</default>
+      <summary>Show apps button</summary>
+    </key>
+    <key name="show-minimized-tiles" type="b">
+      <default>true</default>
+      <summary>Show minimized window tiles</summary>
+    </key>
+    <key name="show-previews" type="b">
+      <default>true</default>
+      <summary>Show window previews on hover</summary>
+    </key>
+    <key name="auto-fit-icons" type="b">
+      <default>true</default>
+      <summary>Shrink icons when dock overflows</summary>
+    </key>
+    <key name="folder-stacks" type="as">
+      <default>[]</default>
+      <summary>Folders pinned to dock</summary>
+    </key>
+    <key name="app-groups" type="as">
+      <default>[]</default>
+      <summary>App groups (format: "Label|id1,id2,id3")</summary>
+    </key>
+    <key name="monitor-index" type="i">
+      <default>-1</default>
+      <summary>Monitor index (-1 = primary)</summary>
+    </key>
+  </schema>
+</schemalist>
