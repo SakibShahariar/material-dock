@@ -14,6 +14,33 @@
     spacing: 6px;
 }
 
+/* Icons are AppDisplay.AppIcon (GNOME 50) which carries `.overview-tile`.
+   Neutralize the app-grid padding/margin inherited from the shell theme so
+   the dock hugs the icon texture instead of ballooning around it. */
+#material-dock .dash-item-container .overview-tile,
+#material-dock .dash-item-container .show-apps {
+    padding: 0;
+    margin: 0;
+    border-radius: 0;
+}
+
+#material-dock .dash-item-container .overview-tile .overview-icon,
+#material-dock .dash-item-container .overview-tile:hover .overview-icon,
+#material-dock .dash-item-container .show-apps .overview-icon,
+#material-dock .dash-item-container .show-apps:hover .overview-icon {
+    padding: 0;
+    border-radius: 0;
+    background-color: transparent;
+    box-shadow: none;
+}
+
+/* Hide the native running dot; we draw our own RunningIndicator instead. */
+#material-dock .app-grid-running-dot {
+    background-color: transparent;
+    width: 0;
+    height: 0;
+}
+
 /* Reject any inherited dash backgrounds inside the dock */
 #material-dock .dash-background {
     background-color: transparent;
