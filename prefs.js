@@ -157,6 +157,10 @@ export default class MaterialDockPreferences extends ExtensionPreferences {
         addIntSpinRow(appearanceGroup, settings,
             'icon-size', 'Icon size (px)', '', 16, 128, 4);
 
+        addSwitchRow(appearanceGroup, settings,
+            'auto-fit-icons', 'Auto-fit icons',
+            'Automatically shrink icons when the dock would overflow the screen');
+
         addComboRow(appearanceGroup, settings,
             'running-indicator', 'Running indicator', 'How running apps are marked',
             [['Dots', 'dots'],
