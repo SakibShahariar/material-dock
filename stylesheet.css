@@ -5,7 +5,7 @@
 .material-dock-card {
     background-color: rgba(28, 30, 36, 0.82);
     border-radius: 18px;
-    padding: 8px 10px 10px 10px;
+    padding: 10px 12px 12px 12px;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
     selection-background-color: transparent;
 }
@@ -32,6 +32,16 @@
     border-radius: 0;
     background-color: transparent;
     box-shadow: none;
+}
+
+/* Keep the app-grid icon on the same vertical baseline as app icons
+   (which reserve space for the running indicator below the texture). */
+#material-dock .show-apps {
+    margin-bottom: 8px;
+}
+
+#material-dock .dash-item-container {
+    padding: 0;
 }
 
 /* Hide the native running dot; we draw our own RunningIndicator instead. */
