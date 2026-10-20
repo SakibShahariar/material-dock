@@ -1,0 +1,64 @@
+name: Validate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  static-checks:
+    name: Static checks
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install validation tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes glib2.0-bin shellcheck
+
+      - name: Validate extension metadata
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          metadata = json.loads(Path("metadata.json").read_text())
+          required = ("name", "uuid", "description", "shell-version", "url", "version")
+          missing = [key for key in required if key not in metadata]
+          if missing:
+              raise SystemExit(f"metadata.json is missing required keys: {', '.join(missing)}")
+          if not isinstance(metadata["shell-version"], list) or not metadata["shell-version"]:
+              raise SystemExit("metadata.json shell-version must be a non-empty array")
+          print("metadata.json is valid")
+          PY
+
+      - name: Check JavaScript syntax
+        run: |
+          while IFS= read -r file; do
+            echo "Checking $file"
+            node --input-type=module --check < "$file"
+          done < <(find . -type f -name '*.js' -not -path './.git/*' | sort)
+
+      - name: Validate GSettings schema
+        run: |
+          glib-compile-schemas --strict --dry-run schemas
+          glib-compile-schemas schemas
+          test -f schemas/gschemas.compiled
+          rm schemas/gschemas.compiled
+
+      - name: Check installer shell syntax
+        run: bash -n install.sh
+
+      - name: Run ShellCheck on installer
+        run: shellcheck install.sh
