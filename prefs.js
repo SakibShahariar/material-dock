@@ -3,6 +3,7 @@ import Gio from 'gi://Gio';
 import GObject from 'gi://GObject';
 import Gtk from 'gi://Gtk?version=4.0';
 import GLib from 'gi://GLib';
+import {ICON_SIZES} from './lib/constants.js';
 
 import {ExtensionPreferences} from 'resource:///org/gnome/Shell/Extensions/js/extensions/prefs.js';
 
@@ -43,6 +44,28 @@ function addComboRow(parent, settings, key, title, subtitle, options) {
         const value = options[sel]?.[1];
         if (value)
             settings.set_string(key, value);
+    });
+    connectSettings(settings, `changed::${key}`, syncFromSettings);
+    syncFromSettings();
+    return row;
+}
+
+function addIntComboRow(parent, settings, key, title, subtitle, values) {
+    const options = values.map(value => [`${value}px`, value]);
+    const model = new Gtk.StringList({strings: options.map(([label]) => label)});
+    const row = new Adw.ComboRow({title, subtitle, model});
+    parent.add(row);
+
+    const syncFromSettings = () => {
+        const value = settings.get_int(key);
+        const index = options.findIndex(([, option]) => option === value);
+        row.set_selected(index < 0 ? 0 : index);
+    };
+
+    row.connect('notify::selected', () => {
+        const value = options[row.get_selected()]?.[1];
+        if (value !== undefined)
+            settings.set_int(key, value);
     });
     connectSettings(settings, `changed::${key}`, syncFromSettings);
     syncFromSettings();
@@ -187,8 +210,8 @@ export default class MaterialDockPreferences extends ExtensionPreferences {
         const appearanceGroup = new Adw.PreferencesGroup({title: 'Icons'});
         appearancePage.add(appearanceGroup);
 
-        addIntSpinRow(appearanceGroup, settings,
-            'icon-size', 'Icon size (px)', '', 16, 128, 4);
+        addIntComboRow(appearanceGroup, settings,
+            'icon-size', 'Icon size', 'Size of app icons on the dock', ICON_SIZES);
 
         addSwitchRow(appearanceGroup, settings,
             'auto-fit-icons', 'Auto-fit icons',
