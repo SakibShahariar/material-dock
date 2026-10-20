@@ -236,14 +236,18 @@ export default class MaterialDockPreferences extends ExtensionPreferences {
                 ['Wave', 'wave'],
                 ['Off', 'off']]);
 
-        addSpinRow(magnifyGroup, settings,
+        const magnifyScaleRow = addSpinRow(magnifyGroup, settings,
             'magnify-scale', 'Scale', 'Maximum icon scale', 1.0, 3.0, 0.05);
 
         const magnifyRangeRow = addIntSpinRow(magnifyGroup, settings,
             'magnify-range', 'Wave range', 'Neighbors affected by wave magnification', 0, 5, 1);
         const syncMagnifyRows = () => {
-            magnifyRangeRow.set_sensitive(settings.get_string('magnify-effect') === 'wave');
+            const enabled = settings.get_boolean('magnify-enabled');
+            const effect = settings.get_string('magnify-effect');
+            magnifyScaleRow.set_sensitive(enabled && effect !== 'off');
+            magnifyRangeRow.set_sensitive(enabled && effect === 'wave');
         };
+        connectSettings(settings, 'changed::magnify-enabled', syncMagnifyRows);
         connectSettings(settings, 'changed::magnify-effect', syncMagnifyRows);
         syncMagnifyRows();
 
