@@ -5,6 +5,26 @@ import Gtk from 'gi://Gtk?version=4.0';
 
 import {ExtensionPreferences} from 'resource:///org/gnome/Shell/Extensions/js/extensions/prefs.js';
 
+const settingsSignalIds = new WeakMap();
+
+function connectSettings(settings, signal, callback) {
+    const id = settings.connect(signal, callback);
+    let ids = settingsSignalIds.get(settings);
+    if (!ids) {
+        ids = [];
+        settingsSignalIds.set(settings, ids);
+    }
+    ids.push(id);
+    return id;
+}
+
+function disconnectSettings(settings) {
+    const ids = settingsSignalIds.get(settings) ?? [];
+    for (const id of ids)
+        settings.disconnect(id);
+    settingsSignalIds.delete(settings);
+}
+
 function addComboRow(parent, settings, key, title, subtitle, options) {
     const labels = options.map(([label]) => label);
     const model = new Gtk.StringList({strings: labels});
@@ -23,7 +43,7 @@ function addComboRow(parent, settings, key, title, subtitle, options) {
         if (value)
             settings.set_string(key, value);
     });
-    settings.connect(`changed::${key}`, syncFromSettings);
+    connectSettings(settings, `changed::${key}`, syncFromSettings);
     syncFromSettings();
     return row;
 }
@@ -36,7 +56,7 @@ function addSpinRow(parent, settings, key, title, subtitle, lower, upper, step) 
     const syncFromSettings = () => row.set_value(settings.get_double(key));
 
     row.connect('notify::value', () => settings.set_double(key, row.get_value()));
-    settings.connect(`changed::${key}`, syncFromSettings);
+    connectSettings(settings, `changed::${key}`, syncFromSettings);
     syncFromSettings();
     return row;
 }
@@ -51,7 +71,7 @@ function addIntSpinRow(parent, settings, key, title, subtitle, lower, upper, ste
     row.connect('notify::value', () => {
         settings.set_int(key, Math.round(row.get_value()));
     });
-    settings.connect(`changed::${key}`, syncFromSettings);
+    connectSettings(settings, `changed::${key}`, syncFromSettings);
     syncFromSettings();
     return row;
 }
@@ -62,7 +82,7 @@ function addSwitchRow(parent, settings, key, title, subtitle) {
 
     const syncFromSettings = () => row.set_active(settings.get_boolean(key));
     row.connect('notify::active', () => settings.set_boolean(key, row.get_active()));
-    settings.connect(`changed::${key}`, syncFromSettings);
+    connectSettings(settings, `changed::${key}`, syncFromSettings);
     syncFromSettings();
     return row;
 }
@@ -94,6 +114,11 @@ export default class MaterialDockPreferences extends ExtensionPreferences {
     fillPreferencesWindow(window) {
         const settings = this.getSettings('org.gnome.shell.extensions.material-dock');
         window._settings = settings;
+
+        window.connect('close-request', () => {
+            disconnectSettings(settings);
+            return false;
+        });
 
         window.default_width = 720;
         window.default_height = 640;
@@ -244,7 +269,7 @@ export default class MaterialDockPreferences extends ExtensionPreferences {
             entryRow.add_suffix(addBtn);
             folderGroup.add(entryRow);
         };
-        settings.connect('changed::folder-stacks', refreshFolders);
+        connectSettings(settings, 'changed::folder-stacks', refreshFolders);
         refreshFolders();
 
         const groupGroup = new Adw.PreferencesGroup({title: 'App groups',
@@ -271,7 +296,7 @@ export default class MaterialDockPreferences extends ExtensionPreferences {
             groupGroup.add(labelRow);
             groupGroup.add(idsRow);
         };
-        settings.connect('changed::app-groups', refreshGroups);
+        connectSettings(settings, 'changed::app-groups', refreshGroups);
         refreshGroups();
     }
 
