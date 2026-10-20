@@ -61,7 +61,7 @@
       <summary>Dock margin from screen edge</summary>
     </key>
     <key name="dock-fixed" type="b">
-      <default>true</default>
+      <default>false</default>
       <summary>Reserve screen space for dock</summary>
     </key>
     <key name="autohide-mode" type="s">
