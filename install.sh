@@ -15,9 +15,11 @@ cp "$SRC"/lib/*.js "$DEST/lib/"
 
 glib-compile-schemas "$DEST/schemas/"
 
-# Allow the current session to discover the extension
-busctl --user call org.gnome.Shell /org/gnome/Shell org.gnome.Shell Eval \
-  'global.reexec_self();' 2>/dev/null || true
+# GNOME Shell Eval is unavailable in normal sessions. On Wayland, a
+# logout/login may be needed for the session to discover a newly installed extension.
+if [[ "${XDG_SESSION_TYPE:-}" == "wayland" ]]; then
+    echo "On Wayland, log out and back in if the newly installed extension does not appear."
+fi
 
 if command -v gnome-extensions >/dev/null 2>&1; then
     gnome-extensions enable "$UUID" 2>/dev/null || echo "Install done. Enable with: gnome-extensions enable $UUID"
