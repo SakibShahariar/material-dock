@@ -3,17 +3,46 @@ set -euo pipefail
 
 UUID="material-dock@SakibShahariar"
 SRC="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-DEST="${XDG_DATA_HOME:-$HOME/.local/share}/gnome-shell/extensions/$UUID"
+EXTENSIONS_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/gnome-shell/extensions"
+DEST="$EXTENSIONS_DIR/$UUID"
 
 echo "Installing $UUID -> $DEST"
-rm -rf "$DEST"
-mkdir -p "$DEST/schemas" "$DEST/lib"
 
-cp "$SRC"/metadata.json "$SRC"/extension.js "$SRC"/prefs.js "$SRC"/stylesheet.css "$DEST/"
-cp "$SRC"/schemas/*.xml "$DEST/schemas/"
-cp "$SRC"/lib/*.js "$DEST/lib/"
+# Stage on the same filesystem as DEST so the final rename is atomic.
+mkdir -p "$EXTENSIONS_DIR"
+WORK_DIR="$(mktemp -d "$EXTENSIONS_DIR/.material-dock-install.XXXXXX")"
+STAGED="$WORK_DIR/$UUID"
+BACKUP="$WORK_DIR/$UUID.backup"
+OLD_MOVED=0
+NEW_INSTALLED=0
 
-glib-compile-schemas "$DEST/schemas/"
+cleanup() {
+    status=$?
+    if [[ $status -ne 0 && $OLD_MOVED -eq 1 && $NEW_INSTALLED -eq 0 && -d "$BACKUP" ]]; then
+        rm -rf "$DEST"
+        mv "$BACKUP" "$DEST"
+        echo "Installation failed; restored previous installation." >&2
+    fi
+    rm -rf "$WORK_DIR"
+    exit "$status"
+}
+trap cleanup EXIT
+
+mkdir -p "$STAGED/schemas" "$STAGED/lib"
+cp "$SRC/metadata.json" "$SRC/extension.js" "$SRC/prefs.js" "$SRC/stylesheet.css" "$STAGED/"
+cp "$SRC"/schemas/*.xml "$STAGED/schemas/"
+cp "$SRC"/lib/*.js "$STAGED/lib/"
+glib-compile-schemas "$STAGED/schemas/"
+
+# Preserve the current installation until the staged copy is complete.
+if [[ -e "$DEST" ]]; then
+    mv "$DEST" "$BACKUP"
+    OLD_MOVED=1
+fi
+
+mv "$STAGED" "$DEST"
+NEW_INSTALLED=1
+rm -rf "$BACKUP"
 
 # GNOME Shell Eval is unavailable in normal sessions. On Wayland, a
 # logout/login may be needed for the session to discover a newly installed extension.
