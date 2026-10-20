@@ -205,7 +205,7 @@ export default class MaterialDockPreferences extends ExtensionPreferences {
         addSwitchRow(magnifyGroup, settings,
             'magnify-enabled', 'Enable magnification', 'Grow icons toward the cursor');
 
-        const magnifyEffectRow = addComboRow(magnifyGroup, settings,
+        addComboRow(magnifyGroup, settings,
             'magnify-effect', 'Effect',
             'Zoom grows the icon in place, wave also grows its neighbors',
             [['Zoom', 'zoom'],
