@@ -52,8 +52,9 @@ ln -s "$PWD" ~/.local/share/gnome-shell/extensions/material-dock@SakibShahariar
 glib-compile-schemas schemas/
 ```
 
-then restart the shell (`alt+f2` → `r`) or re-enable the extension to pick up
-changes. Log errors with:
+then re-enable the extension to pick up changes. The `Alt+F2` → `r`
+restart works only on X11; on Wayland, log out and back in (or use a nested
+`gnome-shell --devkit` session for development). Log errors with:
 
 ```sh
 journalctl -f -o cat | grep -i material-dock
