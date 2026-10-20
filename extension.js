@@ -4,11 +4,13 @@ import {MaterialDockManager} from './lib/manager.js';
 
 export default class MaterialDockExtension extends Extension {
     enable() {
+        this.loadStylesheet();
         this._manager = new MaterialDockManager(this);
     }
 
     disable() {
         this._manager?.destroy();
         this._manager = null;
+        this.unloadStylesheet();
     }
 }
