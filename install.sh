@@ -18,7 +18,7 @@ NEW_INSTALLED=0
 
 cleanup() {
     status=$?
-    if [[ $status -ne 0 && $OLD_MOVED -eq 1 && $NEW_INSTALLED -eq 0 && -d "$BACKUP" ]]; then
+    if [[ $status -ne 0 && -d "$BACKUP" && ! -e "$DEST" ]]; then
         rm -rf "$DEST"
         mv "$BACKUP" "$DEST"
         echo "Installation failed; restored previous installation." >&2
