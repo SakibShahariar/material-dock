@@ -88,5 +88,10 @@ stylesheet.css          dock styling
 
 ## License
 
-Based on GNOME Shell's `ui/dash.js` (GPL-2.0-or-later, copyright GNOME Shell
-contributors). See the `dash.js` file header.
+Material Dock is distributed under the GNU General Public License, version 2
+or (at your option) any later version (GPL-2.0-or-later). The full GPL version 2
+license text is included in [LICENSE](LICENSE).
+
+`lib/dash.js` is based on GNOME Shell's `ui/dash.js` and retains its upstream
+GPL licensing and GNOME Shell contributor attribution in the file header.
+Material Dock modifies that code; it is not an official GNOME Shell project.
