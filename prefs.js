@@ -298,20 +298,28 @@ export default class MaterialDockPreferences extends ExtensionPreferences {
                 this._addFolderRow(folderGroup, settings, path);
 
             const entryRow = new Adw.EntryRow({title: 'Add folder path…'});
-            entryRow.connect('activate', () => {
+            const addFolderFromEntry = () => {
                 const path = entryRow.get_text()?.trim();
-                if (path)
-                    this._addFolder(settings, path);
-                entryRow.set_text('');
-            });
-            const addBtn = makeIconButton('list-add-symbolic', 'Add folder', () => {
-                const path = entryRow.get_text()?.trim();
-                if (path) {
-                    this._addFolder(settings, path);
+                if (path && this._addFolder(settings, path))
                     entryRow.set_text('');
-                }
-            });
-            entryRow.add_suffix(addBtn);
+            };
+            entryRow.connect('activate', addFolderFromEntry);
+            entryRow.add_suffix(makeIconButton('list-add-symbolic', 'Add folder', addFolderFromEntry));
+            entryRow.add_suffix(makeIconButton('folder-open-symbolic', 'Choose folder', () => {
+                const chooser = Gtk.FileChooserNative.new(
+                    'Choose folder', window, Gtk.FileChooserAction.SELECT_FOLDER,
+                    'Select', 'Cancel');
+                chooser.connect('response', (_chooser, response) => {
+                    if (response === Gtk.ResponseType.ACCEPT) {
+                        const file = chooser.get_file();
+                        const path = file?.get_path();
+                        if (path)
+                            this._addFolder(settings, path);
+                    }
+                    chooser.destroy();
+                });
+                chooser.show();
+            }));
             folderGroup.add(entryRow);
         };
         connectSettings(settings, 'changed::folder-stacks', refreshFolders);
@@ -360,11 +368,18 @@ export default class MaterialDockPreferences extends ExtensionPreferences {
         else if (path.startsWith('~/'))
             path = `${GLib.get_home_dir()}/${path.slice(2)}`;
 
+        const file = Gio.File.new_for_path(path);
+        const normalizedPath = file.get_path();
+        if (!normalizedPath ||
+            file.query_file_type(Gio.FileQueryInfoFlags.NONE, null) !== Gio.FileType.DIRECTORY)
+            return false;
+
         const paths = settings.get_strv('folder-stacks');
-        if (paths.includes(path))
-            return;
-        paths.push(path);
+        if (paths.includes(normalizedPath))
+            return false;
+        paths.push(normalizedPath);
         settings.set_strv('folder-stacks', paths);
+        return true;
     }
 
     _addGroupRow(group, settings, entry) {
@@ -377,8 +392,15 @@ export default class MaterialDockPreferences extends ExtensionPreferences {
     }
 
     _addGroup(settings, label, ids) {
+        label = label.trim();
+        const appIds = ids.split(',').map(id => id.trim()).filter(Boolean);
+        if (!label || label.includes('|') || appIds.length === 0 ||
+            appIds.some(id => id.includes('|') || id.includes(',')))
+            return;
+
+        const uniqueIds = [...new Set(appIds)];
         const groups = settings.get_strv('app-groups');
-        const full = `${label}|${ids}`;
+        const full = `${label}|${uniqueIds.join(',')}`;
         if (groups.includes(full))
             return;
         groups.push(full);
