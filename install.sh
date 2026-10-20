@@ -13,9 +13,6 @@ mkdir -p "$EXTENSIONS_DIR"
 WORK_DIR="$(mktemp -d "$EXTENSIONS_DIR/.material-dock-install.XXXXXX")"
 STAGED="$WORK_DIR/$UUID"
 BACKUP="$WORK_DIR/$UUID.backup"
-OLD_MOVED=0
-NEW_INSTALLED=0
-
 cleanup() {
     status=$?
     if [[ $status -ne 0 && -d "$BACKUP" && ! -e "$DEST" ]]; then
@@ -37,11 +34,9 @@ glib-compile-schemas "$STAGED/schemas/"
 # Preserve the current installation until the staged copy is complete.
 if [[ -e "$DEST" ]]; then
     mv "$DEST" "$BACKUP"
-    OLD_MOVED=1
 fi
 
 mv "$STAGED" "$DEST"
-NEW_INSTALLED=1
 rm -rf "$BACKUP"
 
 # GNOME Shell Eval is unavailable in normal sessions. On Wayland, a
