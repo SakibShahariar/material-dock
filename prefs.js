@@ -145,7 +145,7 @@ export default class MaterialDockPreferences extends ExtensionPreferences {
                 ['Switch workspace', 'switch-workspace'],
                 ['Nothing', 'nothing']]);
 
-        const autohideModeRow = addComboRow(behaviorGroup, settings,
+        addComboRow(behaviorGroup, settings,
             'autohide-mode', 'Autohide mode',
             'Intelligent hides the dock only when a window overlaps it',
             [['Never hide', 'never'],
@@ -244,9 +244,14 @@ export default class MaterialDockPreferences extends ExtensionPreferences {
         addIntSpinRow(positionGroup, settings,
             'dock-margin', 'Margin (px)', 'Distance from the screen edge', 0, 200, 4);
 
-        addSwitchRow(positionGroup, settings,
+        const dockFixedRow = addSwitchRow(positionGroup, settings,
             'dock-fixed', 'Reserve screen space',
             'Windows never overlap the dock (requires Never hide mode)');
+        const syncDockFixedRow = () => {
+            dockFixedRow.set_sensitive(settings.get_string('autohide-mode') === 'never');
+        };
+        connectSettings(settings, 'changed::autohide-mode', syncDockFixedRow);
+        syncDockFixedRow();
 
         addIntSpinRow(positionGroup, settings,
             'monitor-index', 'Monitor', '0-based monitor index, -1 for primary', -1, 8, 1);
