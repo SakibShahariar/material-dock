@@ -145,16 +145,23 @@ export default class MaterialDockPreferences extends ExtensionPreferences {
                 ['Switch workspace', 'switch-workspace'],
                 ['Nothing', 'nothing']]);
 
-        addComboRow(behaviorGroup, settings,
+        const autohideModeRow = addComboRow(behaviorGroup, settings,
             'autohide-mode', 'Autohide mode',
             'Intelligent hides the dock only when a window overlaps it',
             [['Never hide', 'never'],
                 ['Auto hide', 'always'],
                 ['Intelligent', 'intelligent']]);
 
-        addIntSpinRow(behaviorGroup, settings,
+        const hideDelayRow = addIntSpinRow(behaviorGroup, settings,
             'autohide-timeout', 'Hide delay (ms)', 'Delay before the dock auto-hides',
             0, 5000, 50);
+
+        const syncAutohideRows = () => {
+            const hides = settings.get_string('autohide-mode') !== 'never';
+            hideDelayRow.set_sensitive(hides);
+        };
+        connectSettings(settings, 'changed::autohide-mode', syncAutohideRows);
+        syncAutohideRows();
 
         const tilesGroup = new Adw.PreferencesGroup({title: 'Windows'});
         behaviorPage.add(tilesGroup);
@@ -198,7 +205,7 @@ export default class MaterialDockPreferences extends ExtensionPreferences {
         addSwitchRow(magnifyGroup, settings,
             'magnify-enabled', 'Enable magnification', 'Grow icons toward the cursor');
 
-        addComboRow(magnifyGroup, settings,
+        const magnifyEffectRow = addComboRow(magnifyGroup, settings,
             'magnify-effect', 'Effect',
             'Zoom grows the icon in place, wave also grows its neighbors',
             [['Zoom', 'zoom'],
@@ -208,8 +215,13 @@ export default class MaterialDockPreferences extends ExtensionPreferences {
         addSpinRow(magnifyGroup, settings,
             'magnify-scale', 'Scale', 'Maximum icon scale', 1.0, 3.0, 0.05);
 
-        addIntSpinRow(magnifyGroup, settings,
+        const magnifyRangeRow = addIntSpinRow(magnifyGroup, settings,
             'magnify-range', 'Wave range', 'Neighbors affected by wave magnification', 0, 5, 1);
+        const syncMagnifyRows = () => {
+            magnifyRangeRow.set_sensitive(settings.get_string('magnify-effect') === 'wave');
+        };
+        connectSettings(settings, 'changed::magnify-effect', syncMagnifyRows);
+        syncMagnifyRows();
 
         // -------- Position --------
         const positionPage = new Adw.PreferencesPage({title: 'Position'});
