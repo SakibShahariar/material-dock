@@ -2,6 +2,7 @@ import Adw from 'gi://Adw?version=1';
 import Gio from 'gi://Gio';
 import GObject from 'gi://GObject';
 import Gtk from 'gi://Gtk?version=4.0';
+import GLib from 'gi://GLib';
 
 import {ExtensionPreferences} from 'resource:///org/gnome/Shell/Extensions/js/extensions/prefs.js';
 
@@ -327,6 +328,11 @@ export default class MaterialDockPreferences extends ExtensionPreferences {
     }
 
     _addFolder(settings, path) {
+        if (path === '~')
+            path = GLib.get_home_dir();
+        else if (path.startsWith('~/'))
+            path = `${GLib.get_home_dir()}/${path.slice(2)}`;
+
         const paths = settings.get_strv('folder-stacks');
         if (paths.includes(path))
             return;
