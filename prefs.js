@@ -339,8 +339,7 @@ export default class MaterialDockPreferences extends ExtensionPreferences {
             const addBtn = makeIconButton('list-add-symbolic', 'Add group', () => {
                 const label = labelRow.get_text()?.trim();
                 const ids = idsRow.get_text()?.trim();
-                if (label && ids) {
-                    this._addGroup(settings, label, ids);
+                if (label && ids && this._addGroup(settings, label, ids)) {
                     labelRow.set_text('');
                     idsRow.set_text('');
                 }
@@ -396,14 +395,16 @@ export default class MaterialDockPreferences extends ExtensionPreferences {
         const appIds = ids.split(',').map(id => id.trim()).filter(Boolean);
         if (!label || label.includes('|') || appIds.length === 0 ||
             appIds.some(id => id.includes('|') || id.includes(',')))
-            return;
+            return false;
 
         const uniqueIds = [...new Set(appIds)];
         const groups = settings.get_strv('app-groups');
         const full = `${label}|${uniqueIds.join(',')}`;
         if (groups.includes(full))
-            return;
+            return false;
+
         groups.push(full);
         settings.set_strv('app-groups', groups);
+        return true;
     }
 }
