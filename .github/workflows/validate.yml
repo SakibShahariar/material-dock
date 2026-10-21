@@ -57,6 +57,30 @@ jobs:
           test -f schemas/gschemas.compiled
           rm schemas/gschemas.compiled
 
+      - name: Check settings references against schema
+        run: |
+          python3 - <<'PY'
+          import re
+          import xml.etree.ElementTree as ET
+          from pathlib import Path
+
+          schema_path = Path("schemas/org.gnome.shell.extensions.material-dock.gschema.xml")
+          root = ET.parse(schema_path).getroot()
+          declared = {key.attrib["name"] for key in root.findall(".//key")}
+          pattern = re.compile(r"""\bsettings\.(?:get|set)_(?:boolean|double|int|string|strv)\(\s*['"]([^'"]+)['"]""")
+          references = {}
+          for path in [Path("extension.js"), Path("prefs.js"), *Path("lib").rglob("*.js")]:
+              source = path.read_text()
+              for key in pattern.findall(source):
+                  references.setdefault(key, set()).add(str(path))
+
+          missing = sorted(set(references) - declared)
+          if missing:
+              details = ", ".join(f"{key} ({', '.join(sorted(references[key]))})" for key in missing)
+              raise SystemExit(f"Settings referenced in JavaScript but missing from schema: {details}")
+          print(f"Validated {len(references)} literal GSettings keys against schema")
+          PY
+
       - name: Check installer shell syntax
         run: bash -n install.sh
 
