@@ -15,7 +15,7 @@ test('accumulates several sub-step events until a step is reached', () => {
     const second = accumulateSmoothScroll(first.remainder, 0.7);
     assert.equal(first.direction, 0);
     assert.equal(second.direction, -1);
-    assert.ok(Math.abs(second.remainder - 0.1) < 1e-9);
+    assert.ok(Math.abs(second.remainder + 0.1) < 1e-9);
 });
 
 test('preserves the remainder after consuming one step', () => {
@@ -27,7 +27,8 @@ test('preserves the remainder after consuming one step', () => {
 
 test('supports a reverse gesture after accumulated movement', () => {
     const first = accumulateSmoothScroll(0, 0.8);
-    const second = accumulateSmoothScroll(first.remainder, -0.2);
+    const second = accumulateSmoothScroll(first.remainder, -1.9);
     assert.equal(first.direction, 0);
     assert.equal(second.direction, 1);
+    assert.ok(Math.abs(second.remainder - 0.1) < 1e-9);
 });
