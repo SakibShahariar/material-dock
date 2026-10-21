@@ -90,6 +90,14 @@
       </choices>
       <summary>Left-click action on running app</summary>
     </key>
+    <key name="middle-click-action" type="s">
+      <default>'new-window'</default>
+      <choices>
+        <choice value="new-window"/>
+        <choice value="activate"/>
+      </choices>
+      <summary>Middle-click action on app icons</summary>
+    </key>
     <key name="scroll-action" type="s">
       <default>'cycle-windows'</default>
       <choices>
