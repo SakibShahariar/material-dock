@@ -8,6 +8,8 @@ GitHub Actions runs these checks on pushes to `main`, pull requests, and manual 
 
 - Parse and validate required fields in `metadata.json`.
 - Parse every JavaScript file for syntax errors.
+- Run Node.js unit tests for auto-fit sizing, including fit, invalid measurements, proportional scaling, rounding, and minimum-size boundaries.
+- Check literal GSettings references against declared schema keys.
 - Compile the GSettings schema in strict mode.
 - Check `install.sh` syntax with Bash.
 - Run ShellCheck against `install.sh`.
