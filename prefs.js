@@ -373,14 +373,19 @@ export default class MaterialDockPreferences extends ExtensionPreferences {
         else if (path.startsWith('~/'))
             path = `${GLib.get_home_dir()}/${path.slice(2)}`;
 
-        const file = Gio.File.new_for_path(path);
-        const normalizedPath = file.get_path();
-        if (!normalizedPath ||
-            file.query_file_type(Gio.FileQueryInfoFlags.NONE, null) !== Gio.FileType.DIRECTORY)
+        // Folder stacks are persisted as absolute, normalized paths. Relative
+        // paths depend on the process working directory and can silently point
+        // somewhere different when the extension is loaded by GNOME Shell.
+        if (!GLib.path_is_absolute(path))
+            return false;
+
+        const normalizedPath = GLib.canonicalize_filename(path, null);
+        const file = Gio.File.new_for_path(normalizedPath);
+        if (file.query_file_type(Gio.FileQueryInfoFlags.NONE, null) !== Gio.FileType.DIRECTORY)
             return false;
 
         const paths = settings.get_strv('folder-stacks');
-        if (paths.includes(normalizedPath))
+        if (paths.some(existing => GLib.canonicalize_filename(existing, null) === normalizedPath))
             return false;
         paths.push(normalizedPath);
         settings.set_strv('folder-stacks', paths);
