@@ -350,6 +350,8 @@ export default class MaterialDockPreferences extends ExtensionPreferences {
                     idsRow.set_text('');
                 }
             });
+            idsRow.add_suffix(makeIconButton('view-app-grid-symbolic',
+                'Choose installed apps', () => this._chooseAppIds(window, idsRow)));
             idsRow.add_suffix(addBtn);
             groupGroup.add(labelRow);
             groupGroup.add(idsRow);
@@ -390,6 +392,71 @@ export default class MaterialDockPreferences extends ExtensionPreferences {
         paths.push(normalizedPath);
         settings.set_strv('folder-stacks', paths);
         return true;
+    }
+
+    _chooseAppIds(window, idsRow) {
+        const apps = Gio.AppInfo.get_all()
+            .filter(app => app.get_id() && app.should_show())
+            .sort((a, b) => a.get_display_name().localeCompare(b.get_display_name()));
+
+        const dialog = new Gtk.Dialog({
+            title: 'Choose apps for group',
+            transient_for: window,
+            modal: true,
+        });
+        dialog.set_default_size(480, 560);
+        dialog.add_button('Cancel', Gtk.ResponseType.CANCEL);
+        dialog.add_button('Use selected apps', Gtk.ResponseType.ACCEPT);
+
+        const content = dialog.get_content_area();
+        const search = new Gtk.SearchEntry({placeholder_text: 'Search apps…'});
+        content.append(search);
+
+        const list = new Gtk.ListBox({
+            selection_mode: Gtk.SelectionMode.MULTIPLE,
+            vexpand: true,
+        });
+        list.set_filter_func(row => {
+            const query = search.get_text().trim().toLowerCase();
+            return !query || row._appName.toLowerCase().includes(query) ||
+                row._appId.toLowerCase().includes(query);
+        });
+
+        for (const app of apps) {
+            const appId = app.get_id();
+            const appName = app.get_display_name() || appId;
+            const row = new Gtk.ListBoxRow({
+                child: new Gtk.Label({
+                    label: `${appName} (${appId})`,
+                    xalign: 0,
+                    margin_start: 8,
+                    margin_end: 8,
+                    margin_top: 6,
+                    margin_bottom: 6,
+                }),
+            });
+            row._appId = appId;
+            row._appName = appName;
+            list.append(row);
+        }
+
+        search.connect('search-changed', () => list.invalidate_filter());
+        const scroller = new Gtk.ScrolledWindow({
+            child: list,
+            vexpand: true,
+            hscrollbar_policy: Gtk.PolicyType.NEVER,
+        });
+        content.append(scroller);
+
+        dialog.connect('response', (_dialog, response) => {
+            if (response === Gtk.ResponseType.ACCEPT) {
+                const selectedIds = list.get_selected_rows().map(row => row._appId);
+                if (selectedIds.length > 0)
+                    idsRow.set_text(selectedIds.join(','));
+            }
+            dialog.destroy();
+        });
+        dialog.present();
     }
 
     _addGroupRow(group, settings, entry) {
