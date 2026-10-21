@@ -26,6 +26,8 @@ Run these checks after installing the extension in a disposable GNOME user/sessi
 - [ ] Move, resize, maximize, restore, and minimize windows across the dock edge; verify intelligent autohide updates.
 - [ ] Switch workspaces and monitors; verify dock placement and overlap detection.
 - [ ] Hover app icons and move the pointer between an icon and its preview; verify previews close after leaving the hover corridor.
+- [ ] Close a previewed window using its close button and middle-click; verify the intended window closes and the card does not activate it accidentally.
+- [ ] Open a folder stack with many files, then dismiss it during enumeration; verify cancellation does not leave callbacks or file enumerators active.
 - [ ] Rapidly move between app icons; confirm preview polling does not continue after previews close.
 - [ ] Exercise click, middle-click, scroll, window cycling, and minimize/restore actions.
 - [ ] Disable and re-enable the extension; confirm timers, pointer watches, signals, and UI actors are cleaned up.
