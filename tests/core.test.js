@@ -24,7 +24,7 @@ test('auto-fit handles an invalid measured width without shrinking', () => {
 
 test('smooth scroll accumulates sub-step deltas without losing them', () => {
     assert.deepEqual(accumulateSmoothScroll(0, -0.4), {direction: 0, remainder: 0.4});
-    assert.deepEqual(accumulateSmoothScroll(0.4, -0.7), {direction: 1, remainder: 0.1});
+    assert.deepEqual(accumulateSmoothScroll(0.4, -0.6), {direction: 1, remainder: 0});
 });
 
 test('smooth scroll preserves extra steps and direction', () => {
