@@ -17,6 +17,8 @@ Quickshell dock for Omarchy/Hyprland.
 - **Minimize-on-click** — `focus-or-minimize` (OmaDock "active" mode: clicking
   a focused app parks it), `toggle-minimize`, `cycle-windows`, `previews`, and
   more.
+- **Middle-click policy** — choose whether middle-click activates an app or opens
+  a new window; the default is to open a new window when the app supports it.
 - **Folder stacks** — pin folders to the dock; clicking opens a popover with
   the newest files (name, size, relative time), click to open.
 - **App groups** — group apps into a single tile with a live multi-icon; click
