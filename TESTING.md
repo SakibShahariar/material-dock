@@ -21,6 +21,7 @@ Run these checks after installing the extension in a disposable GNOME user/sessi
 
 - [ ] Enable the extension; confirm there are no errors in the Shell log.
 - [ ] Open Preferences and change icon size, dock position/alignment, margin, and autohide settings.
+- [ ] Verify irrelevant preference rows disable correctly; try folder chooser/path validation, app-group app selection, and monitor selection with one and multiple displays.
 - [ ] Enable/disable magnification and switch between zoom and wave effects.
 - [ ] Move, resize, maximize, restore, and minimize windows across the dock edge; verify intelligent autohide updates.
 - [ ] Switch workspaces and monitors; verify dock placement and overlap detection.
