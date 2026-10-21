@@ -1,4 +1,5 @@
 import Adw from 'gi://Adw?version=1';
+import Gdk from 'gi://Gdk?version=4.0';
 import Gio from 'gi://Gio';
 import GObject from 'gi://GObject';
 import Gtk from 'gi://Gtk?version=4.0';
@@ -287,8 +288,7 @@ export default class MaterialDockPreferences extends ExtensionPreferences {
         connectSettings(settings, 'changed::autohide-mode', syncDockFixedRow);
         syncDockFixedRow();
 
-        addIntSpinRow(positionGroup, settings,
-            'monitor-index', 'Monitor', '0-based monitor index, -1 for primary', -1, 8, 1);
+        this._addMonitorRow(positionGroup, settings);
 
         // -------- Extras --------
         const extrasPage = new Adw.PreferencesPage({title: 'Extras'});
@@ -358,6 +358,37 @@ export default class MaterialDockPreferences extends ExtensionPreferences {
         };
         connectSettings(settings, 'changed::app-groups', refreshGroups);
         refreshGroups();
+    }
+
+    _addMonitorRow(group, settings) {
+        const display = Gdk.Display.get_default();
+        const monitorModel = display?.get_monitors();
+        const monitorCount = Math.max(1, monitorModel?.get_n_items() ?? 1);
+        const options = [
+            ['Primary monitor', -1],
+            ...Array.from({length: monitorCount}, (_, index) => [
+                `Monitor ${index + 1}`, index,
+            ]),
+        ];
+        const row = new Adw.ComboRow({
+            title: 'Monitor',
+            subtitle: 'Choose which display hosts the dock',
+            model: new Gtk.StringList({strings: options.map(([label]) => label)}),
+        });
+        group.add(row);
+
+        const syncFromSettings = () => {
+            const value = settings.get_int('monitor-index');
+            const index = options.findIndex(([, option]) => option === value);
+            row.set_selected(index < 0 ? 0 : index);
+        };
+        row.connect('notify::selected', () => {
+            const value = options[row.get_selected()]?.[1];
+            if (value !== undefined)
+                settings.set_int('monitor-index', value);
+        });
+        connectSettings(settings, 'changed::monitor-index', syncFromSettings);
+        syncFromSettings();
     }
 
     _addFolderRow(group, settings, path) {
