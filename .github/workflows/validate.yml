@@ -50,6 +50,9 @@ jobs:
             node --input-type=module --check < "$file"
           done < <(find . -type f -name '*.js' -not -path './.git/*' | sort)
 
+      - name: Run JavaScript unit tests
+        run: node --test tests/*.test.js
+
       - name: Validate GSettings schema
         run: |
           glib-compile-schemas --strict --dry-run schemas
