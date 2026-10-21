@@ -164,6 +164,12 @@ export default class MaterialDockPreferences extends ExtensionPreferences {
                 ['Open new window', 'launch']]);
 
         addComboRow(behaviorGroup, settings,
+            'middle-click-action', 'Middle-click action',
+            'Choose whether middle-click opens a new window or activates the app',
+            [['Open new window', 'new-window'],
+                ['Activate app', 'activate']]);
+
+        addComboRow(behaviorGroup, settings,
             'scroll-action', 'Scroll action', 'What happens when scrolling over a dock icon',
             [['Cycle windows', 'cycle-windows'],
                 ['Switch workspace', 'switch-workspace'],
