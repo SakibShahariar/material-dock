@@ -24,7 +24,10 @@ Run these checks in a real GNOME Shell session after installing the extension. A
 - [ ] Left-click a running app to focus it; test each configured click policy, including minimize and window cycling.
 - [ ] Toggle “Current workspace only” and switch workspaces; running icons should update immediately while favorites remain pinned.
 - [ ] Middle-click apps that support opening a new window and apps that do not; verify the configured policy.
+- [ ] Click the dedicated desktop-shaped button; confirm windows on the primary monitor minimize, then click again and confirm only those windows are restored.
+- [ ] Repeat Show Desktop with some windows already minimized, with a window closed while the desktop is shown, and with windows on a secondary monitor; pre-minimized and secondary-monitor windows should remain unchanged.
 - [ ] Right-click the dock background and an app icon; confirm the context menu opens without also activating the app.
+- [ ] Use “Show Desktop / Restore Windows” from the context menu and confirm it matches the dedicated button behavior.
 - [ ] Open previews, move the pointer from the dock into a preview, rapidly switch between apps, and close previews; confirm polling stops afterward.
 - [ ] Move the pointer through the gap between dock and preview at several angles; the preview should stay open inside the padded corridor and close after leaving it.
 - [ ] Test running, focused, urgent, minimized, and closed app indicators.
