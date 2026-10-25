@@ -16,6 +16,8 @@ Run these checks in a real GNOME Shell session after installing the extension. A
 - [ ] Move, resize, maximize, minimize, and restore a window across the dock edge; verify intelligent autohide updates.
 - [ ] Switch workspaces and monitors while windows overlap the dock; confirm visibility follows the active workspace and monitor.
 - [ ] Enter and leave Overview and fullscreen; record the actual behavior against the selected settings.
+- [ ] Enable “Hide in Activities Overview” and confirm the dock hides while Overview is open, then returns according to the autohide mode when Overview closes.
+- [ ] Enable “Hide in fullscreen” and enter/exit fullscreen on the dock's monitor; verify it hides and reappears, including when a fullscreen window is created or closed.
 
 ## App interactions
 
@@ -26,6 +28,7 @@ Run these checks in a real GNOME Shell session after installing the extension. A
 - [ ] Open previews, move the pointer from the dock into a preview, rapidly switch between apps, and close previews; confirm polling stops afterward.
 - [ ] Move the pointer through the gap between dock and preview at several angles; the preview should stay open inside the padded corridor and close after leaving it.
 - [ ] Test running, focused, urgent, minimized, and closed app indicators.
+- [ ] Test dot/bar indicators with multiple windows, a focused window, and an urgent window; confirm urgent styling takes precedence.
 - [ ] Open a folder stack and app group; test item activation, popover placement, and dismissal by clicking outside.
 
 ## Record results

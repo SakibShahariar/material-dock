@@ -12,6 +12,7 @@ Quickshell dock for Omarchy/Hyprland.
   click to restore. Live thumbnail previews are not implemented yet.
 - **Magnification** — `zoom` (grow in place) and `wave` (grow neighbors too)
   effects with configurable scale and range.
+- **Overview/fullscreen visibility** — optionally hide the dock while Activities Overview is open or a fullscreen window occupies its monitor.
 - **Intelligent autohide** — `never`, `always`, or `intelligent` (hides only
   when a window actually overlaps the dock), with configurable hide delay and
   a reveal strip at the screen edge.
