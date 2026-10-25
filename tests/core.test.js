@@ -45,7 +45,8 @@ test('smooth scroll drains deferred whole steps on later events', () => {
 
 test('smooth scroll allows accumulated deltas to reverse direction', () => {
     const partial = accumulateSmoothScroll(0.7, 1);
-    assert.deepEqual(partial, {direction: 0, remainder: -0.3});
+    assert.equal(partial.direction, 0);
+    assert.ok(Math.abs(partial.remainder + 0.3) < 1e-9);
     const reversed = accumulateSmoothScroll(partial.remainder, 0.8);
     assert.equal(reversed.direction, -1);
     assert.ok(Math.abs(reversed.remainder + 0.1) < 1e-9);
