@@ -64,3 +64,25 @@ test('visibility resolver starts only transitions that are not already stable or
         transitionState: 'hiding',
     });
 });
+
+test('visibility resolver reverses an in-flight transition when the target changes', () => {
+    assert.deepEqual(getVisibilityTransition('showing', false), {
+        stableState: 'hidden',
+        transitionState: 'hiding',
+    });
+    assert.deepEqual(getVisibilityTransition('hiding', true), {
+        stableState: 'visible',
+        transitionState: 'showing',
+    });
+});
+
+test('visibility resolver recovers from an unrecognized state', () => {
+    assert.deepEqual(getVisibilityTransition('unknown', true), {
+        stableState: 'visible',
+        transitionState: 'showing',
+    });
+    assert.deepEqual(getVisibilityTransition('unknown', false), {
+        stableState: 'hidden',
+        transitionState: 'hiding',
+    });
+});
