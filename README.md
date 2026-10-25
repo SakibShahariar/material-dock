@@ -1,6 +1,6 @@
 # Material Dock — a GNOME Shell dock
 
-A highly customizable dock for GNOME Shell (47+), designed as a from-scratch
+A highly customizable dock for GNOME Shell 47–50, designed as a from-scratch
 replacement for *Dash to Dock* with more controls, inspired by the OmaDock
 Quickshell dock for Omarchy/Hyprland.
 
@@ -20,6 +20,8 @@ Quickshell dock for Omarchy/Hyprland.
   more.
 - **Middle-click policy** — choose whether middle-click activates an app or opens
   a new window; the default is to open a new window when the app supports it.
+- **Workspace filtering** — optionally show running app icons only for the current
+  workspace; favorites remain available as launchers.
 - **Folder stacks** — pin folders to the dock; clicking opens a popover with
   the newest files (name, size, relative time), click to open.
 - **App groups** — group apps into a single tile with a live multi-icon; click

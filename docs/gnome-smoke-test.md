@@ -20,6 +20,7 @@ Run these checks in a real GNOME Shell session after installing the extension. A
 ## App interactions
 
 - [ ] Left-click a running app to focus it; test each configured click policy, including minimize and window cycling.
+- [ ] Toggle “Current workspace only” and switch workspaces; running icons should update immediately while favorites remain pinned.
 - [ ] Middle-click apps that support opening a new window and apps that do not; verify the configured policy.
 - [ ] Right-click the dock background and an app icon; confirm the context menu opens without also activating the app.
 - [ ] Open previews, move the pointer from the dock into a preview, rapidly switch between apps, and close previews; confirm polling stops afterward.
