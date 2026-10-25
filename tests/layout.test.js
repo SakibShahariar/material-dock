@@ -23,3 +23,8 @@ test('does not grow beyond the configured size', () => {
     assert.equal(calculateAutoFitIconSize(48, 100, 480), 24);
     assert.equal(calculateAutoFitIconSize(32, 100, 400), 24);
 });
+
+test('does not enlarge configured icons below the auto-fit floor', () => {
+    assert.equal(calculateAutoFitIconSize(16, 10, 160), 16);
+    assert.equal(calculateAutoFitIconSize(20, 10, 200), 20);
+});
