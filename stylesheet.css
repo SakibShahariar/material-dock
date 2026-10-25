@@ -6,7 +6,7 @@
 .material-dock-card {
     border-radius: 18px;
     padding: 10px 12px 12px 12px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+    box-shadow: 0 8px 24px alpha(@theme_bg_color, 0.35);
     selection-background-color: transparent;
 }
 
@@ -165,7 +165,7 @@
 }
 
 .material-dock-min-tile-close:hover {
-    background-color: rgba(255, 106, 91, 0.5);
+    background-color: alpha(@error_color, 0.5);
 }
 
 /* Hover window preview panel */
@@ -174,7 +174,7 @@
     border-radius: 14px;
     padding: 8px;
     spacing: 8px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+    box-shadow: 0 8px 24px alpha(@theme_bg_color, 0.45);
 }
 
 .material-dock-preview-button {
