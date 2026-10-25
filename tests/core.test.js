@@ -86,3 +86,18 @@ test('visibility resolver recovers from an unrecognized state', () => {
         transitionState: 'hiding',
     });
 });
+
+test('smooth scroll handles absent prior state and zero-delta events', () => {
+    assert.deepEqual(accumulateSmoothScroll(null, -0.25), {
+        direction: 0,
+        remainder: 0.25,
+    });
+    assert.deepEqual(accumulateSmoothScroll(0, 0), {
+        direction: 0,
+        remainder: 0,
+    });
+    assert.deepEqual(accumulateSmoothScroll(0.75, 0), {
+        direction: 0,
+        remainder: 0.75,
+    });
+});
