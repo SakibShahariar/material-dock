@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 
-import {getWindowsToMinimize} from '../lib/show-desktop.js';
+import {getWindowsToMinimize, getWindowsToRestore} from '../lib/show-desktop.js';
 
 function windowState({monitor = 0, minimized = false, skipTaskbar = false, mapped = true} = {}) {
     return {
@@ -27,4 +27,14 @@ test('selects only eligible windows on the primary monitor', () => {
 test('handles empty and invalid window lists', () => {
     assert.deepEqual(getWindowsToMinimize([], 0), []);
     assert.deepEqual(getWindowsToMinimize([null, undefined], 0), []);
+});
+
+test('restores only still-live windows that remain minimized', () => {
+    const minimized = windowState({minimized: true});
+    const alreadyRestored = windowState();
+    const closed = windowState({minimized: true, mapped: false});
+
+    assert.deepEqual(
+        getWindowsToRestore([minimized, alreadyRestored, closed]),
+        [minimized]);
 });
