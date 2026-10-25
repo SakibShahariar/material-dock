@@ -32,6 +32,26 @@ test('smooth scroll preserves extra steps and direction', () => {
     assert.deepEqual(accumulateSmoothScroll(0, 2), {direction: -1, remainder: -1});
 });
 
+test('smooth scroll drains deferred whole steps on later events', () => {
+    const first = accumulateSmoothScroll(0, -2.5);
+    assert.deepEqual(first, {direction: 1, remainder: 1.5});
+
+    const second = accumulateSmoothScroll(first.remainder, 0);
+    assert.deepEqual(second, {direction: 1, remainder: 0.5});
+
+    const third = accumulateSmoothScroll(second.remainder, 0);
+    assert.deepEqual(third, {direction: 0, remainder: 0.5});
+});
+
+test('smooth scroll allows accumulated deltas to reverse direction', () => {
+    const partial = accumulateSmoothScroll(0.7, 1);
+    assert.deepEqual(partial, {direction: 0, remainder: -0.3});
+    assert.deepEqual(accumulateSmoothScroll(partial.remainder, 0.8), {
+        direction: -1,
+        remainder: -0.10000000000000003,
+    });
+});
+
 test('visibility resolver starts only transitions that are not already stable or underway', () => {
     assert.deepEqual(getVisibilityTransition('hidden', true), {
         stableState: 'visible',
