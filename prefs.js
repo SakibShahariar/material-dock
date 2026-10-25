@@ -198,6 +198,10 @@ export default class MaterialDockPreferences extends ExtensionPreferences {
         behaviorPage.add(tilesGroup);
 
         addSwitchRow(tilesGroup, settings,
+            'current-workspace-only', 'Current workspace only',
+            'Show running app icons only when they have a window on the active workspace');
+
+        addSwitchRow(tilesGroup, settings,
             'show-minimized-tiles', 'Minimized window tiles',
             'Show minimized windows as clickable tiles on the dock');
         addSwitchRow(tilesGroup, settings,

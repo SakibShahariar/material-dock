@@ -119,6 +119,10 @@
       <default>true</default>
       <summary>Show apps button</summary>
     </key>
+    <key name="current-workspace-only" type="b">
+      <default>false</default>
+      <summary>Show running app icons only for the current workspace</summary>
+    </key>
     <key name="show-minimized-tiles" type="b">
       <default>true</default>
       <summary>Show minimized window tiles</summary>
