@@ -48,6 +48,8 @@ gnome-extensions enable "$UUID"
 
 ## Development
 
+Before reporting a GNOME Shell version as supported, run the [GNOME session smoke-test checklist](docs/gnome-smoke-test.md); Node-based CI cannot verify Shell runtime behavior.
+
 Symlink the folder into the extensions dir so edits apply immediately:
 
 ```sh
