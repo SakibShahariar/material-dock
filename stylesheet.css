@@ -64,50 +64,50 @@
 }
 
 .material-dock-indicator-dot {
-    background-color: rgba(255, 255, 255, 0.35);
+    background-color: alpha(@theme_fg_color, 0.35);
     border-radius: 4px;
     -st-icon-style: symbolic;
 }
 
 .material-dock-indicator-dot.running {
-    background-color: rgba(255, 255, 255, 0.75);
+    background-color: alpha(@theme_fg_color, 0.75);
 }
 
 .material-dock-indicator-dot.active-bar,
 .material-dock-indicator-dot.focused {
-    background-color: #4c8cff;
+    background-color: @selected_bg_color;
     border-radius: 4px;
-    border: 1px solid rgba(0, 0, 0, 0.4);
+    border: 1px solid alpha(@theme_bg_color, 0.4);
 }
 
 .material-dock-indicator-dot.urgent {
-    background-color: #ff6a5b;
-    box-shadow: 0 0 6px rgba(255, 106, 91, 0.9);
+    background-color: @error_color;
+    box-shadow: 0 0 6px alpha(@error_color, 0.9);
 }
 
 .material-dock-indicator-bar {
     border-radius: 2px;
-    background-color: rgba(255, 255, 255, 0.35);
+    background-color: alpha(@theme_fg_color, 0.35);
 }
 
 .material-dock-indicator-bar.active,
 .material-dock-indicator-bar.focused {
-    background-color: #4c8cff;
+    background-color: @selected_bg_color;
 }
 
 .material-dock-indicator-bar.running {
-    background-color: rgba(255, 255, 255, 0.75);
+    background-color: alpha(@theme_fg_color, 0.75);
 }
 
 .material-dock-indicator-bar.urgent {
-    background-color: #ff6a5b;
+    background-color: @error_color;
 }
 
 .material-dock-indicator-count {
     font-size: 10px;
     font-weight: bold;
-    color: #ffffff;
-    background-color: rgba(0, 0, 0, 0.55);
+    color: @theme_fg_color;
+    background-color: alpha(@theme_bg_color, 0.55);
     border-radius: 8px;
     padding: 1px 5px;
     margin: 0 4px 0 0;
@@ -121,16 +121,16 @@
 }
 
 .material-dock-tile:hover {
-    background-color: rgba(255, 255, 255, 0.12);
+    background-color: alpha(@theme_fg_color, 0.12);
 }
 
 .material-dock-tile:active {
-    background-color: rgba(255, 255, 255, 0.2);
+    background-color: alpha(@theme_fg_color, 0.2);
 }
 
 .material-dock-tile-label {
     font-size: 10px;
-    color: rgba(255, 255, 255, 0.85);
+    color: alpha(@theme_fg_color, 0.85);
     padding-top: 2px;
 }
 
@@ -141,7 +141,7 @@
 
 .material-dock-min-tile {
     border-radius: 10px;
-    background-color: rgba(255, 255, 255, 0.07);
+    background-color: alpha(@theme_fg_color, 0.07);
     padding: 4px 3px;
     margin: 0 1px;
     max-width: 96px;
@@ -149,12 +149,12 @@
 }
 
 .material-dock-min-tile:hover {
-    background-color: rgba(255, 255, 255, 0.15);
+    background-color: alpha(@theme_fg_color, 0.15);
 }
 
 .material-dock-min-tile-label {
     font-size: 10px;
-    color: rgba(255, 255, 255, 0.9);
+    color: alpha(@theme_fg_color, 0.9);
     max-width: 56px;
 }
 
@@ -170,7 +170,7 @@
 
 /* Hover window preview panel */
 .material-dock-preview-panel {
-    background-color: rgba(28, 30, 36, 0.9);
+    background-color: alpha(@theme_bg_color, 0.9);
     border-radius: 14px;
     padding: 8px;
     spacing: 8px;
@@ -184,7 +184,7 @@
 }
 
 .material-dock-preview-button:hover {
-    background-color: rgba(255, 255, 255, 0.12);
+    background-color: alpha(@theme_fg_color, 0.12);
 }
 
 .material-dock-preview-close {
@@ -195,29 +195,29 @@
 }
 
 .material-dock-preview-close:hover {
-    background-color: rgba(255, 106, 91, 0.65);
+    background-color: alpha(@error_color, 0.65);
 }
 
 .material-dock-preview-button:active {
-    background-color: rgba(255, 255, 255, 0.2);
+    background-color: alpha(@theme_fg_color, 0.2);
 }
 
 .material-dock-preview-title {
     font-size: 11px;
-    color: rgba(255, 255, 255, 0.9);
+    color: alpha(@theme_fg_color, 0.9);
     padding-top: 4px;
     max-width: 84px;
 }
 
 .material-dock-preview-empty {
-    color: rgba(255, 255, 255, 0.6);
+    color: alpha(@theme_fg_color, 0.6);
     padding: 12px 18px;
 }
 
 .material-dock-preview-more {
     font-size: 14px;
     font-weight: bold;
-    color: rgba(255, 255, 255, 0.6);
+    color: alpha(@theme_fg_color, 0.6);
     padding: 0 6px;
 }
 
@@ -228,7 +228,7 @@
 
 .material-dock-file-sub {
     font-size: 10px;
-    color: rgba(255, 255, 255, 0.6);
+    color: alpha(@theme_fg_color, 0.6);
 }
 
 /* Dedicated show-desktop control */
@@ -240,9 +240,9 @@
 }
 
 .material-dock-show-desktop:hover {
-    background-color: rgba(255, 255, 255, 0.12);
+    background-color: alpha(@theme_fg_color, 0.12);
 }
 
 .material-dock-show-desktop:active {
-    background-color: rgba(255, 255, 255, 0.2);
+    background-color: alpha(@theme_fg_color, 0.2);
 }
