@@ -46,10 +46,9 @@ test('smooth scroll drains deferred whole steps on later events', () => {
 test('smooth scroll allows accumulated deltas to reverse direction', () => {
     const partial = accumulateSmoothScroll(0.7, 1);
     assert.deepEqual(partial, {direction: 0, remainder: -0.3});
-    assert.deepEqual(accumulateSmoothScroll(partial.remainder, 0.8), {
-        direction: -1,
-        remainder: -0.10000000000000003,
-    });
+    const reversed = accumulateSmoothScroll(partial.remainder, 0.8);
+    assert.equal(reversed.direction, -1);
+    assert.ok(Math.abs(reversed.remainder + 0.1) < 1e-9);
 });
 
 test('visibility resolver starts only transitions that are not already stable or underway', () => {
