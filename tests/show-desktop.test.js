@@ -38,3 +38,27 @@ test('restores only still-live windows that remain minimized', () => {
         getWindowsToRestore([minimized, alreadyRestored, closed]),
         [minimized]);
 });
+
+test('ignores windows that are being unmanaged while checking eligibility', () => {
+    const destroyed = {
+        minimized: false,
+        skip_taskbar: false,
+        get_monitor() { throw new Error('window unmanaged'); },
+        get_compositor_private() { throw new Error('window unmanaged'); },
+    };
+    const noActor = windowState({mapped: false});
+    const minimizedNoActor = windowState({minimized: true, mapped: false});
+    assert.deepEqual(getWindowsToMinimize([destroyed, noActor], 0), []);
+    assert.deepEqual(getWindowsToRestore([destroyed, minimizedNoActor]), []);
+});
+
+test('keeps processing eligible windows when another window is being destroyed', () => {
+    const destroyed = {
+        minimized: false,
+        skip_taskbar: false,
+        get_monitor() { throw new Error('window unmanaged'); },
+        get_compositor_private: () => null,
+    };
+    const healthy = windowState();
+    assert.deepEqual(getWindowsToMinimize([destroyed, healthy], 0), [healthy]);
+});
