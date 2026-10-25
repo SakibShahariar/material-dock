@@ -50,6 +50,29 @@ jobs:
             node --input-type=module --check < "$file"
           done < <(find . -type f -name '*.js' -not -path './.git/*' | sort)
 
+      - name: Reject unsupported JavaScript APIs
+        run: |
+          python3 - <<'PY'
+          import re
+          from pathlib import Path
+
+          pattern = re.compile(r"\\bMath\\s*\\.\\s*clamp\\s*\\(")
+          matches = []
+          for path in Path(".").rglob("*.js"):
+              if ".git" in path.parts or "node_modules" in path.parts:
+                  continue
+              for number, line in enumerate(path.read_text().splitlines(), 1):
+                  if pattern.search(line):
+                      matches.append(f"{path}:{number}: {line.strip()}")
+
+          if matches:
+              raise SystemExit(
+                  "Math.clamp is unavailable in supported GNOME Shell runtimes; "
+                  "use Math.max/Math.min instead:\\n" + "\\n".join(matches)
+              )
+          print("No unsupported Math.clamp calls found")
+          PY
+
       - name: Run JavaScript unit tests
         run: node --test tests/*.test.js
 
@@ -70,7 +93,7 @@ jobs:
           schema_path = Path("schemas/org.gnome.shell.extensions.material-dock.gschema.xml")
           root = ET.parse(schema_path).getroot()
           declared = {key.attrib["name"] for key in root.findall(".//key")}
-          pattern = re.compile(r"""\bsettings\.(?:get|set)_(?:boolean|double|int|string|strv)\(\s*['"]([^'"]+)['"]""")
+          pattern = re.compile(r"""\\bsettings\\.(?:get|set)_(?:boolean|double|int|string|strv)\\(\\s*['"]([^'"]+)['"]""")
           references = {}
           for path in [Path("extension.js"), Path("prefs.js"), *Path("lib").rglob("*.js")]:
               source = path.read_text()
