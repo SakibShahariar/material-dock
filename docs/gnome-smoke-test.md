@@ -24,6 +24,7 @@ Run these checks in a real GNOME Shell session after installing the extension. A
 - [ ] Middle-click apps that support opening a new window and apps that do not; verify the configured policy.
 - [ ] Right-click the dock background and an app icon; confirm the context menu opens without also activating the app.
 - [ ] Open previews, move the pointer from the dock into a preview, rapidly switch between apps, and close previews; confirm polling stops afterward.
+- [ ] Move the pointer through the gap between dock and preview at several angles; the preview should stay open inside the padded corridor and close after leaving it.
 - [ ] Test running, focused, urgent, minimized, and closed app indicators.
 - [ ] Open a folder stack and app group; test item activation, popover placement, and dismissal by clicking outside.
 
