@@ -119,6 +119,14 @@
       <default>true</default>
       <summary>Show apps button</summary>
     </key>
+    <key name="hide-in-overview" type="b">
+      <default>false</default>
+      <summary>Hide the dock while Activities Overview is open</summary>
+    </key>
+    <key name="hide-in-fullscreen" type="b">
+      <default>false</default>
+      <summary>Hide the dock on a monitor with a fullscreen window</summary>
+    </key>
     <key name="current-workspace-only" type="b">
       <default>false</default>
       <summary>Show running app icons only for the current workspace</summary>

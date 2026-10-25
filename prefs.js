@@ -187,6 +187,13 @@ export default class MaterialDockPreferences extends ExtensionPreferences {
             'autohide-timeout', 'Hide delay (ms)', 'Delay before the dock auto-hides',
             0, 5000, 50);
 
+        addSwitchRow(behaviorGroup, settings,
+            'hide-in-overview', 'Hide in Activities Overview',
+            'Hide this dock while the GNOME Activities Overview is open');
+        addSwitchRow(behaviorGroup, settings,
+            'hide-in-fullscreen', 'Hide in fullscreen',
+            'Hide this dock when a fullscreen window is on its monitor');
+
         const syncAutohideRows = () => {
             const hides = settings.get_string('autohide-mode') !== 'never';
             hideDelayRow.set_sensitive(hides);
