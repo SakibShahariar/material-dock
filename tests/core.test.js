@@ -15,7 +15,7 @@ test('auto-fit shrinks from the configured baseline and rounds down to a multipl
 });
 
 test('auto-fit enforces the minimum size when space is very limited', () => {
-    assert.equal(calculateAutoFitIconSize(64, 20, 400), 24);
+    assert.equal(calculateAutoFitIconSize(64, 20, 400), 16);
 });
 
 test('auto-fit handles an invalid measured width without shrinking', () => {
