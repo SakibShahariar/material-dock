@@ -26,6 +26,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install --yes glib2.0-bin shellcheck
+          npm install --global eslint@9.39.1 prettier@3.6.2
 
       - name: Validate extension metadata
         run: |
@@ -42,6 +43,12 @@ jobs:
               raise SystemExit("metadata.json shell-version must be a non-empty array")
           print("metadata.json is valid")
           PY
+
+      - name: Run ESLint
+        run: npm run lint
+
+      - name: Check JavaScript formatting
+        run: npm run format:check
 
       - name: Check JavaScript syntax
         run: |

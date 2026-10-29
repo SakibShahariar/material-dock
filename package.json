@@ -3,7 +3,9 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "node --experimental-test-coverage --test"
+    "test": "node --experimental-test-coverage --test",
+    "lint": "eslint .",
+    "format:check": "prettier --check \"**/*.js\""
   },
   "engines": {
     "node": ">=20"
