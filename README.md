@@ -68,6 +68,8 @@ Run automated tests and syntax checks:
 npm test
 ```
 
+The test command also prints a Node coverage summary. See the [coverage baseline](docs/test-coverage.md); its percentages cover files loaded by tests, not the entire GNOME Shell extension.
+
 For an editable local checkout, link the repository into the extensions directory and compile its schema:
 
 ```sh
