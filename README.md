@@ -54,6 +54,10 @@ glib-compile-schemas "$DEST/schemas/"
 gnome-extensions enable "$UUID"
 ```
 
+## Configuration reference
+
+See the [GSettings reference](docs/settings-reference.md) for every setting, its default, and allowed values.
+
 ## Development and tests
 
 Requirements: Node.js 20 or newer for the unit-test suite, plus GNOME Shell and its development tools for live integration checks.
