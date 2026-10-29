@@ -50,8 +50,5 @@ test('does not mutate the input list', () => {
 test('falls back to name order for unknown modes and keeps equal entries stable', () => {
     const entries = [{name: 'same', id: 1}, {name: 'same', id: 2}, {name: 'alpha', id: 3}];
 
-    assert.deepEqual(
-        sortFolderEntries(entries, 'unknown').map(entry => entry.id),
-        [3, 1, 2],
-    );
+    assert.deepEqual(sortFolderEntries(entries, 'unknown').map(entry => entry.id), [3, 1, 2]);
 });
