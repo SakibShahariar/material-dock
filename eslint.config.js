@@ -32,7 +32,10 @@ export default [
             'no-sparse-arrays': 'error',
             'no-this-before-super': 'error',
             'no-unmodified-loop-condition': 'error',
-            'no-unused-vars': ['error', {args: 'none', caughtErrors: 'none', varsIgnorePattern: '^_'}],
+            'no-unused-vars': [
+                'error',
+                {args: 'none', caughtErrors: 'none', varsIgnorePattern: '^_'},
+            ],
             'no-unreachable': 'error',
             'no-unsafe-finally': 'error',
             'no-unsafe-negation': 'error',
