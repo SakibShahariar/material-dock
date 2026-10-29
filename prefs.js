@@ -352,6 +352,13 @@ export default class MaterialDockPreferences extends ExtensionPreferences {
             'Show apps button',
             'Show the button that opens the applications grid',
         );
+        addSwitchRow(
+            tilesGroup,
+            settings,
+            'show-desktop-button',
+            'Show Desktop button',
+            'Show or hide the dock button; Show Desktop remains available from the context menu',
+        );
         addResetRow(
             tilesGroup,
             settings,
@@ -362,6 +369,7 @@ export default class MaterialDockPreferences extends ExtensionPreferences {
                 'show-favorites',
                 'show-running',
                 'show-show-apps-button',
+                'show-desktop-button',
             ],
             'Reset window and content options',
             'Restore window filtering, previews, and dock content preferences',

@@ -2,7 +2,7 @@
 
 Schema ID: `org.gnome.shell.extensions.material-dock`
 
-This reference documents all **27 keys** currently declared in `schemas/org.gnome.shell.extensions.material-dock.gschema.xml`. Defaults and allowed values must be kept in sync with that schema when settings are added or changed.
+This reference documents all **28 keys** currently declared in `schemas/org.gnome.shell.extensions.material-dock.gschema.xml`. Defaults and allowed values must be kept in sync with that schema when settings are added or changed.
 
 Types: `boolean` is true/false, `integer` is a whole number, `double` is a decimal number, `string` is text, and `string array` is a list of strings.
 
@@ -26,6 +26,7 @@ Types: `boolean` is true/false, `integer` is a whole number, `double` is a decim
 | `show-favorites` | boolean | true | Keep favorite apps visible when they are not running. | true / false |
 | `show-running` | boolean | true | Show apps that currently have open windows. | true / false |
 | `show-show-apps-button` | boolean | true | Show the button that opens the applications grid. | true / false |
+| `show-desktop-button` | boolean | true | Show the dock's Show Desktop button independently of other dock content. | true / false |
 | `hide-in-overview` | boolean | false | Hide the dock while Activities Overview is open. | true / false |
 | `hide-in-fullscreen` | boolean | false | Hide the dock on a monitor with a fullscreen window. | true / false |
 | `current-workspace-only` | boolean | false | Limit running-app icons to the active workspace; favorites remain available. | true / false |

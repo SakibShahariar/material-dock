@@ -119,6 +119,10 @@
       <default>true</default>
       <summary>Show apps button</summary>
     </key>
+    <key name="show-desktop-button" type="b">
+      <default>true</default>
+      <summary>Show the dock's Show Desktop button</summary>
+    </key>
     <key name="hide-in-overview" type="b">
       <default>false</default>
       <summary>Hide the dock while Activities Overview is open</summary>
