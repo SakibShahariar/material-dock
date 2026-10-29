@@ -26,7 +26,9 @@ test('rejects an incomplete Matugen palette so GNOME theme colors can take over'
 });
 
 test('rejects non-hex values for required palette colors', () => {
-    const colors = parseMatugenColors(completePalette.replace('--primary: #a8c7fa;', '--primary: currentColor;'));
+    const colors = parseMatugenColors(
+        completePalette.replace('--primary: #a8c7fa;', '--primary: currentColor;'),
+    );
     assert.equal(hasRequiredMatugenColors(colors), false);
 });
 

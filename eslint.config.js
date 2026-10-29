@@ -13,7 +13,7 @@ export default [
         },
         rules: {
             'constructor-super': 'error',
-            'eqeqeq': ['error', 'always', {null: 'ignore'}],
+            eqeqeq: ['error', 'always', {null: 'ignore'}],
             'getter-return': 'error',
             'no-const-assign': 'error',
             'no-dupe-args': 'error',

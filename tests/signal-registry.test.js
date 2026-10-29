@@ -14,8 +14,7 @@ function mockSignalObject() {
             return id;
         },
         disconnect(id) {
-            if (!handlers.has(id))
-                throw new Error('unknown signal handler');
+            if (!handlers.has(id)) throw new Error('unknown signal handler');
             handlers.delete(id);
         },
         is_destroyed() {

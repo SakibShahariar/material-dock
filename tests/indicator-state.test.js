@@ -18,7 +18,13 @@ test('urgent state takes precedence over focused and running states', () => {
 });
 
 test('uses bar classes when bar indicators are configured', () => {
-    assert.equal(getIndicatorStyle(true, false, false, 0, 'bars'), 'material-dock-indicator-bar running');
+    assert.equal(
+        getIndicatorStyle(true, false, false, 0, 'bars'),
+        'material-dock-indicator-bar running',
+    );
     assert.equal(getIndicatorStyle(false, false, false, 0, 'bars'), 'material-dock-indicator-bar');
-    assert.equal(getIndicatorStyle(false, true, false, 0, 'bars'), 'material-dock-indicator-bar focused');
+    assert.equal(
+        getIndicatorStyle(false, true, false, 0, 'bars'),
+        'material-dock-indicator-bar focused',
+    );
 });

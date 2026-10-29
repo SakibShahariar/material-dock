@@ -10,11 +10,15 @@ test('keeps apps with a taskbar-visible window on the active workspace', () => {
     const other = {};
     const currentApp = app({workspace: active, skip_taskbar: false});
     const otherApp = app({workspace: other, skip_taskbar: false});
-    const mixedApp = app({workspace: other, skip_taskbar: false},
-        {workspace: active, skip_taskbar: false});
+    const mixedApp = app(
+        {workspace: other, skip_taskbar: false},
+        {workspace: active, skip_taskbar: false},
+    );
 
-    assert.deepEqual(filterAppsToWorkspace([currentApp, otherApp, mixedApp], active),
-        [currentApp, mixedApp]);
+    assert.deepEqual(filterAppsToWorkspace([currentApp, otherApp, mixedApp], active), [
+        currentApp,
+        mixedApp,
+    ]);
 });
 
 test('ignores windows marked skip-taskbar and apps with no windows', () => {
@@ -28,7 +32,8 @@ test('ignores windows marked skip-taskbar and apps with no windows', () => {
 test('returns an empty list when no apps have windows on the active workspace', () => {
     const active = {};
     const other = {};
-    assert.deepEqual(filterAppsToWorkspace([
-        app({workspace: other, skip_taskbar: false}),
-    ], active), []);
+    assert.deepEqual(
+        filterAppsToWorkspace([app({workspace: other, skip_taskbar: false})], active),
+        [],
+    );
 });
