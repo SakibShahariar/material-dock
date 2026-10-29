@@ -1,7 +1,6 @@
 import Adw from 'gi://Adw?version=1';
 import Gdk from 'gi://Gdk?version=4.0';
 import Gio from 'gi://Gio';
-import GObject from 'gi://GObject';
 import Gtk from 'gi://Gtk?version=4.0';
 import GLib from 'gi://GLib';
 import {ICON_SIZES} from './lib/constants.js';
