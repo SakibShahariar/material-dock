@@ -1,7 +1,18 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 
-import {calculateAutoFitIconSize} from '../lib/layout.js';
+import {calculateAvailableDockWidth, calculateAutoFitIconSize} from '../lib/layout.js';
+
+test('deducts only the dock edge margins from the monitor width', () => {
+    assert.equal(calculateAvailableDockWidth(1920, 4), 1912);
+    assert.equal(calculateAvailableDockWidth(320, 8), 304);
+});
+
+test('keeps available width positive for tiny monitors and extreme margins', () => {
+    assert.equal(calculateAvailableDockWidth(80, 100), 1);
+    assert.equal(calculateAvailableDockWidth(Number.NaN, 4), 1);
+    assert.equal(calculateAvailableDockWidth(320, -5), 320);
+});
 
 test('keeps configured size when the dock already fits', () => {
     assert.equal(calculateAutoFitIconSize(48, 240, 220), 48);
@@ -15,18 +26,18 @@ test('scales proportionally and rounds down to a multiple of four', () => {
     assert.equal(calculateAutoFitIconSize(48, 200, 240), 40);
 });
 
-test('never shrinks below the 24px auto-fit floor for regular icons', () => {
-    assert.equal(calculateAutoFitIconSize(48, 100, 480), 24);
+test('shrinks crowded docks to the schema minimum when needed', () => {
+    assert.equal(calculateAutoFitIconSize(48, 100, 480), 16);
+    assert.equal(calculateAutoFitIconSize(32, 100, 400), 16);
 });
 
 test('does not grow beyond the configured size', () => {
-    assert.equal(calculateAutoFitIconSize(48, 100, 480), 24);
-    assert.equal(calculateAutoFitIconSize(32, 100, 400), 24);
+    assert.equal(calculateAutoFitIconSize(48, 100, 480), 16);
 });
 
 test('small configured icons shrink only as far as the schema minimum', () => {
-    assert.equal(calculateAutoFitIconSize(16, 10, 160), 16);
-    assert.equal(calculateAutoFitIconSize(20, 10, 200), 16);
+    assert.equal(calculateAutoFitIconSize(16, 1, 160), 16);
+    assert.equal(calculateAutoFitIconSize(20, 1, 200), 16);
 });
 
 test('preserves small configured icons when no shrink is needed', () => {
