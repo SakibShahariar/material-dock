@@ -2,7 +2,7 @@
 
 Schema ID: `org.gnome.shell.extensions.material-dock`
 
-This reference documents all **29 keys** currently declared in `schemas/org.gnome.shell.extensions.material-dock.gschema.xml`. Defaults and allowed values must be kept in sync with that schema when settings are added or changed.
+This reference documents all **30 keys** currently declared in `schemas/org.gnome.shell.extensions.material-dock.gschema.xml`. Defaults and allowed values must be kept in sync with that schema when settings are added or changed.
 
 Types: `boolean` is true/false, `integer` is a whole number, `double` is a decimal number, `string` is text, and `string array` is a list of strings.
 
@@ -35,6 +35,7 @@ Types: `boolean` is true/false, `integer` is a whole number, `double` is a decim
 | `auto-fit-icons` | boolean | true | Shrink icons automatically when the dock would overflow available space. | true / false |
 | `folder-stacks` | string array | [] | Absolute folder paths pinned to the dock. | Array of directory paths |
 | `folder-sort` | string | `'modified'` | Sort files inside folder stacks. | `'name'`, `'modified'`, `'type'` |
+| `theme-source` | string | `'gnome-shell'` | Internal runtime status for the active theme source; updated by the extension. | `'gnome-shell'`, `'matugen'` |
 | `app-groups` | string array | [] | App groups in the format Label|id1,id2,id3. | Array of group definitions |
 | `monitor-index` | integer | -1 | Monitor selected for the dock; -1 means the primary monitor. | -1 or a monitor index |
 

@@ -193,7 +193,7 @@ export default class MaterialDockPreferences extends ExtensionPreferences {
         addResetRow(
             resetGroup,
             settings,
-            () => settings.list_keys(),
+            () => settings.list_keys().filter(key => key !== 'theme-source'),
             'Restore all defaults',
             'Reset every preference, including pinned folders and app groups',
             window,
@@ -382,6 +382,28 @@ export default class MaterialDockPreferences extends ExtensionPreferences {
 
         const appearanceGroup = new Adw.PreferencesGroup({title: 'Icons'});
         appearancePage.add(appearanceGroup);
+
+        const themeGroup = new Adw.PreferencesGroup({title: 'Theme'});
+        appearancePage.add(themeGroup);
+        const themeRow = new Adw.ActionRow({
+            title: 'Active theme source',
+            subtitle: 'Shows which stylesheet source Material Dock is currently using',
+        });
+        const themeValue = new Gtk.Label({valign: Gtk.Align.CENTER});
+        themeValue.add_css_class('dim-label');
+        themeRow.add_suffix(themeValue);
+        themeGroup.add(themeRow);
+        const syncThemeSource = () => {
+            const source = settings.get_string('theme-source');
+            themeValue.set_text(source === 'matugen' ? 'Matugen palette' : 'GNOME Shell fallback');
+            themeRow.set_subtitle(
+                source === 'matugen'
+                    ? 'Matugen colors are loaded from ~/.config/matugen/matugen-colors.css.'
+                    : 'Matugen colors are missing, invalid, or unavailable; GNOME Shell colors are used.',
+            );
+        };
+        connectSettings(settings, 'changed::theme-source', syncThemeSource);
+        syncThemeSource();
 
         addIntComboRow(
             appearanceGroup,

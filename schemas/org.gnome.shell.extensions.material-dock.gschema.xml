@@ -160,6 +160,14 @@
       </choices>
       <summary>Sort order for folder stack files</summary>
     </key>
+    <key name="theme-source" type="s">
+      <default>'gnome-shell'</default>
+      <choices>
+        <choice value="gnome-shell"/>
+        <choice value="matugen"/>
+      </choices>
+      <summary>Runtime status of the active dock theme source</summary>
+    </key>
     <key name="app-groups" type="as">
       <default>[]</default>
       <summary>App groups (format: "Label|id1,id2,id3")</summary>
