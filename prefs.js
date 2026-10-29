@@ -130,6 +130,47 @@ function makeIconButton(iconName, tooltip, onActivate) {
     return btn;
 }
 
+function addResetRow(group, settings, keyProvider, title, subtitle, window, destructive = false) {
+    const row = new Adw.ActionRow({title, subtitle});
+    row.add_suffix(
+        makeIconButton('edit-undo-symbolic', `Reset ${title}`, () => {
+            const reset = () => {
+                for (const key of keyProvider()) settings.reset(key);
+            };
+
+            if (!destructive) {
+                reset();
+                return;
+            }
+
+            const dialog = new Gtk.Dialog({
+                title: `Reset ${title.toLowerCase()}?`,
+                transient_for: window,
+                modal: true,
+            });
+            dialog.add_button('Cancel', Gtk.ResponseType.CANCEL);
+            dialog.add_button('Reset', Gtk.ResponseType.ACCEPT);
+            dialog.get_content_area().append(
+                new Gtk.Label({
+                    label: 'This reset removes saved folder stacks or app groups along with the selected settings. This cannot be undone.',
+                    wrap: true,
+                    xalign: 0,
+                    margin_start: 12,
+                    margin_end: 12,
+                    margin_top: 12,
+                    margin_bottom: 12,
+                }),
+            );
+            dialog.connect('response', (_dialog, response) => {
+                if (response === Gtk.ResponseType.ACCEPT) reset();
+                dialog.destroy();
+            });
+            dialog.present();
+        }),
+    );
+    group.add(row);
+}
+
 export default class MaterialDockPreferences extends ExtensionPreferences {
     fillPreferencesWindow(window) {
         const settings = this.getSettings('org.gnome.shell.extensions.material-dock');
@@ -146,6 +187,18 @@ export default class MaterialDockPreferences extends ExtensionPreferences {
         // -------- Behavior --------
         const behaviorPage = new Adw.PreferencesPage({title: 'Behavior'});
         window.add(behaviorPage);
+
+        const resetGroup = new Adw.PreferencesGroup({title: 'Reset settings'});
+        behaviorPage.add(resetGroup);
+        addResetRow(
+            resetGroup,
+            settings,
+            () => settings.list_keys(),
+            'Restore all defaults',
+            'Reset every preference, including pinned folders and app groups',
+            window,
+            true,
+        );
 
         const behaviorGroup = new Adw.PreferencesGroup({title: 'Dock behavior'});
         behaviorPage.add(behaviorGroup);
@@ -236,6 +289,22 @@ export default class MaterialDockPreferences extends ExtensionPreferences {
         };
         connectSettings(settings, 'changed::autohide-mode', syncAutohideRows);
         syncAutohideRows();
+        addResetRow(
+            behaviorGroup,
+            settings,
+            () => [
+                'click-action',
+                'middle-click-action',
+                'scroll-action',
+                'autohide-mode',
+                'autohide-timeout',
+                'hide-in-overview',
+                'hide-in-fullscreen',
+            ],
+            'Reset dock behavior',
+            'Restore click, scroll, autohide, Overview, and fullscreen preferences',
+            window,
+        );
 
         const tilesGroup = new Adw.PreferencesGroup({title: 'Windows'});
         behaviorPage.add(tilesGroup);
@@ -283,6 +352,21 @@ export default class MaterialDockPreferences extends ExtensionPreferences {
             'Show apps button',
             'Show the button that opens the applications grid',
         );
+        addResetRow(
+            tilesGroup,
+            settings,
+            () => [
+                'current-workspace-only',
+                'show-minimized-tiles',
+                'show-previews',
+                'show-favorites',
+                'show-running',
+                'show-show-apps-button',
+            ],
+            'Reset window and content options',
+            'Restore window filtering, previews, and dock content preferences',
+            window,
+        );
 
         // -------- Appearance --------
         const appearancePage = new Adw.PreferencesPage({title: 'Appearance'});
@@ -319,6 +403,14 @@ export default class MaterialDockPreferences extends ExtensionPreferences {
                 ['Bar', 'bars'],
                 ['None', 'none'],
             ],
+        );
+        addResetRow(
+            appearanceGroup,
+            settings,
+            () => ['icon-size', 'auto-fit-icons', 'running-indicator'],
+            'Reset icon appearance',
+            'Restore icon size, auto-fit, and running indicator preferences',
+            window,
         );
 
         const magnifyGroup = new Adw.PreferencesGroup({title: 'Magnification'});
@@ -375,6 +467,14 @@ export default class MaterialDockPreferences extends ExtensionPreferences {
         connectSettings(settings, 'changed::magnify-enabled', syncMagnifyRows);
         connectSettings(settings, 'changed::magnify-effect', syncMagnifyRows);
         syncMagnifyRows();
+        addResetRow(
+            magnifyGroup,
+            settings,
+            () => ['magnify-enabled', 'magnify-effect', 'magnify-scale', 'magnify-range'],
+            'Reset magnification',
+            'Restore magnification effect, scale, and range',
+            window,
+        );
 
         // -------- Position --------
         const positionPage = new Adw.PreferencesPage({title: 'Position'});
@@ -433,6 +533,14 @@ export default class MaterialDockPreferences extends ExtensionPreferences {
         syncDockFixedRow();
 
         this._addMonitorRow(positionGroup, settings);
+        addResetRow(
+            positionGroup,
+            settings,
+            () => ['dock-position', 'dock-alignment', 'dock-margin', 'dock-fixed', 'monitor-index'],
+            'Reset placement',
+            'Restore dock edge, alignment, margin, reserved space, and monitor selection',
+            window,
+        );
 
         // -------- Extras --------
         const extrasPage = new Adw.PreferencesPage({title: 'Extras'});
@@ -479,6 +587,15 @@ export default class MaterialDockPreferences extends ExtensionPreferences {
                 }),
             );
             folderGroup.add(entryRow);
+            addResetRow(
+                folderGroup,
+                settings,
+                () => ['folder-stacks'],
+                'Reset folder stacks',
+                'Remove all pinned folders',
+                window,
+                true,
+            );
         };
         connectSettings(settings, 'changed::folder-stacks', refreshFolders);
         refreshFolders();
@@ -512,6 +629,15 @@ export default class MaterialDockPreferences extends ExtensionPreferences {
             idsRow.add_suffix(addBtn);
             groupGroup.add(labelRow);
             groupGroup.add(idsRow);
+            addResetRow(
+                groupGroup,
+                settings,
+                () => ['app-groups'],
+                'Reset app groups',
+                'Remove all configured app groups',
+                window,
+                true,
+            );
         };
         connectSettings(settings, 'changed::app-groups', refreshGroups);
         refreshGroups();
