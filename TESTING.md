@@ -15,6 +15,42 @@ GitHub Actions runs these checks on pushes to `main`, pull requests, and manual 
 - Check `install.sh` syntax with Bash.
 - Run ShellCheck against `install.sh`.
 
+## Prepare and capture evidence
+
+Run the automated checks first from the repository checkout:
+
+```sh
+npm test
+node --version
+git rev-parse HEAD
+glib-compile-schemas --strict schemas/
+bash -n install.sh
+```
+
+Install or update the extension in the current user account:
+
+```sh
+./install.sh
+gnome-extensions info material-dock@SakibShahariar
+gnome-extensions enable material-dock@SakibShahariar
+```
+
+Follow relevant logs while reproducing a problem:
+
+```sh
+journalctl -f -o cat | grep -iE 'material-dock|gnome-shell|mutter'
+```
+
+Keep the exact commit SHA, GNOME Shell version, session type, reproduction steps, and relevant log excerpt with the result. Redact unrelated personal information from logs before sharing them.
+
+### Reload differences
+
+- **X11:** after changing extension files, `Alt+F2` then `r` can restart GNOME Shell. Log out first if the session does not support this path.
+- **Wayland:** do not rely on `Alt+F2` → `r`; log out and back in, or use a nested `gnome-shell --devkit` session when available.
+- **Both:** check the extension state and logs after reload. A successful `npm test` or CI run does not mean the extension was loaded in GNOME Shell.
+
+For Wayland multi-monitor, fractional-scaling, hotplug, fullscreen, previews, stacks, theme, and lifecycle cases, follow the [Wayland validation matrix](docs/wayland-validation-matrix.md). Use the [GNOME Shell smoke-test checklist](docs/gnome-smoke-test.md) for the broader interaction sweep.
+
 ## GNOME session smoke-test checklist
 
 Run these checks after installing the extension in a disposable GNOME user/session. Record the GNOME Shell version and whether the session is Wayland or X11.
