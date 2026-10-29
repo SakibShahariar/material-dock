@@ -598,15 +598,30 @@ export default class MaterialDockPreferences extends ExtensionPreferences {
             addResetRow(
                 folderGroup,
                 settings,
-                () => ['folder-stacks'],
+                () => ['folder-stacks', 'folder-sort'],
                 'Reset folder stacks',
-                'Remove all pinned folders',
+                'Remove pinned folders and restore the default sorting preference',
                 window,
                 true,
             );
         };
         connectSettings(settings, 'changed::folder-stacks', refreshFolders);
         refreshFolders();
+
+        const folderSortGroup = new Adw.PreferencesGroup({title: 'Folder sorting'});
+        extrasPage.add(folderSortGroup);
+        addComboRow(
+            folderSortGroup,
+            settings,
+            'folder-sort',
+            'Sort files by',
+            'Choose the order used inside folder stack popovers',
+            [
+                ['Name (A–Z)', 'name'],
+                ['Recently modified', 'modified'],
+                ['File type', 'type'],
+            ],
+        );
 
         const groupGroup = new Adw.PreferencesGroup({
             title: 'App groups',

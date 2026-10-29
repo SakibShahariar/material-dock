@@ -151,6 +151,15 @@
       <default>[]</default>
       <summary>Folders pinned to dock</summary>
     </key>
+    <key name="folder-sort" type="s">
+      <default>'modified'</default>
+      <choices>
+        <choice value="name"/>
+        <choice value="modified"/>
+        <choice value="type"/>
+      </choices>
+      <summary>Sort order for folder stack files</summary>
+    </key>
     <key name="app-groups" type="as">
       <default>[]</default>
       <summary>App groups (format: "Label|id1,id2,id3")</summary>
