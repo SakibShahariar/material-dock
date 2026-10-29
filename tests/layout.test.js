@@ -40,7 +40,14 @@ test('small configured icons shrink only as far as the schema minimum', () => {
     assert.equal(calculateAutoFitIconSize(20, 1, 200), 16);
 });
 
-test('falls back to valid icon sizes for non-finite measurements', () => {\n    assert.equal(calculateAutoFitIconSize(Number.NaN, 100, 200), 16);\n    assert.equal(calculateAutoFitIconSize(48, Number.NaN, 200), 16);\n    assert.equal(calculateAutoFitIconSize(48, 100, Number.NaN), 48);\n    assert.equal(calculateAutoFitIconSize(200, 100, 400), 32);\n});\n\ntest('preserves small configured icons when no shrink is needed', () => {
+test('falls back to valid icon sizes for non-finite measurements', () => {
+    assert.equal(calculateAutoFitIconSize(Number.NaN, 100, 200), 16);
+    assert.equal(calculateAutoFitIconSize(48, Number.NaN, 200), 16);
+    assert.equal(calculateAutoFitIconSize(48, 100, Number.NaN), 48);
+    assert.equal(calculateAutoFitIconSize(200, 100, 400), 32);
+});
+
+test('preserves small configured icons when no shrink is needed', () => {
     assert.equal(calculateAutoFitIconSize(16, 160, 160), 16);
     assert.equal(calculateAutoFitIconSize(20, 200, 200), 20);
 });
