@@ -215,11 +215,11 @@ export default class MaterialDockPreferences extends ExtensionPreferences {
             'show-previews', 'Window previews on hover',
             'Show a preview panel with the app windows when hovering an icon');
         addSwitchRow(tilesGroup, settings,
-            'show-favorites', 'Show favorite apps', '');
+            'show-favorites', 'Show favorite apps', 'Keep pinned apps visible even when they are not running');
         addSwitchRow(tilesGroup, settings,
-            'show-running', 'Show running apps', '');
+            'show-running', 'Show running apps', 'Show apps that currently have open windows');
         addSwitchRow(tilesGroup, settings,
-            'show-show-apps-button', 'Show apps button', '');
+            'show-show-apps-button', 'Show apps button', 'Show the button that opens the applications grid');
 
         // -------- Appearance --------
         const appearancePage = new Adw.PreferencesPage({title: 'Appearance'});
