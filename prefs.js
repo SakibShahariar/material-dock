@@ -4,25 +4,26 @@ import Gio from 'gi://Gio';
 import Gtk from 'gi://Gtk?version=4.0';
 import GLib from 'gi://GLib';
 import {ICON_SIZES} from './lib/constants.js';
+import {buildMonitorOptions} from './lib/monitor-options.js';
 
 import {ExtensionPreferences} from 'resource:///org/gnome/Shell/Extensions/js/extensions/prefs.js';
 
 const settingsSignalIds = new WeakMap();
 
-function connectSettings(settings, signal, callback) {
-    const id = settings.connect(signal, callback);
+function connectSettings(settings, signal, callback, target = settings) {
+    const id = target.connect(signal, callback);
     let ids = settingsSignalIds.get(settings);
     if (!ids) {
         ids = [];
         settingsSignalIds.set(settings, ids);
     }
-    ids.push(id);
+    ids.push([target, id]);
     return id;
 }
 
 function disconnectSettings(settings) {
     const ids = settingsSignalIds.get(settings) ?? [];
-    for (const id of ids) settings.disconnect(id);
+    for (const [target, id] of ids) target.disconnect(id);
     settingsSignalIds.delete(settings);
 }
 
@@ -691,27 +692,40 @@ export default class MaterialDockPreferences extends ExtensionPreferences {
     _addMonitorRow(group, settings) {
         const display = Gdk.Display.get_default();
         const monitorModel = display?.get_monitors();
-        const monitorCount = Math.max(1, monitorModel?.get_n_items() ?? 1);
-        const options = [
-            ['Primary monitor', -1],
-            ...Array.from({length: monitorCount}, (_, index) => [`Monitor ${index + 1}`, index]),
-        ];
+        let options = buildMonitorOptions(monitorModel?.get_n_items() ?? 0);
+        const model = new Gtk.StringList({strings: options.map(([label]) => label)});
         const row = new Adw.ComboRow({
             title: 'Monitor',
             subtitle: 'Choose which display hosts the dock',
-            model: new Gtk.StringList({strings: options.map(([label]) => label)}),
+            model,
         });
         group.add(row);
 
+        let updatingModel = false;
         const syncFromSettings = () => {
             const value = settings.get_int('monitor-index');
             const index = options.findIndex(([, option]) => option === value);
+            updatingModel = true;
             row.set_selected(index < 0 ? 0 : index);
+            updatingModel = false;
         };
         row.connect('notify::selected', () => {
+            if (updatingModel) return;
             const value = options[row.get_selected()]?.[1];
             if (value !== undefined) settings.set_int('monitor-index', value);
         });
+
+        if (monitorModel) {
+            const syncMonitorOptions = () => {
+                options = buildMonitorOptions(monitorModel.get_n_items());
+                updatingModel = true;
+                model.splice(0, model.get_n_items(), options.map(([label]) => label));
+                updatingModel = false;
+                syncFromSettings();
+            };
+            connectSettings(settings, 'items-changed', syncMonitorOptions, monitorModel);
+        }
+
         connectSettings(settings, 'changed::monitor-index', syncFromSettings);
         syncFromSettings();
     }
