@@ -49,7 +49,7 @@ jobs:
 
       - name: Check JavaScript formatting
         run: |
-          npx --yes prettier@3.6.2 --write "**/*.js"
+          prettier --write "**/*.js"
           git diff -- "*.js" "lib/*.js" "tests/*.js"
 
 
