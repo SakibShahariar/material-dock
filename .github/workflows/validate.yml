@@ -47,6 +47,11 @@ jobs:
       - name: Run ESLint
         run: npm run lint
 
+      - name: Show Prettier formatting diff for stacks
+        run: |
+          npx prettier lib/stacks.js > /tmp/stacks.formatted.js
+          diff -u lib/stacks.js /tmp/stacks.formatted.js || true
+
       - name: Check JavaScript formatting
         run: npm run format:check
 
