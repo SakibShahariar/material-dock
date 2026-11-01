@@ -5,7 +5,11 @@ import Gtk from 'gi://Gtk?version=4.0';
 import GLib from 'gi://GLib';
 import {ICON_SIZES} from './lib/constants.js';
 import {buildMonitorOptions} from './lib/monitor-options.js';
-import {moveAppGroup, normalizeAppGroup, replaceAppGroup} from './lib/app-groups.js';
+import {
+    moveAppGroup,
+    normalizeAppGroup,
+    replaceAppGroup,
+} from './lib/app-groups.js';
 
 import {ExtensionPreferences} from 'resource:///org/gnome/Shell/Extensions/js/extensions/prefs.js';
 
