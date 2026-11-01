@@ -5,7 +5,10 @@ import {hasDockContent} from '../lib/empty-state.js';
 
 test('empty state is shown when every dock section has no eligible content', () => {
     assert.equal(hasDockContent(), false);
-    assert.equal(hasDockContent({appCount: 0, showApps: false, showDesktop: false}), false);
+    assert.equal(
+        hasDockContent({appCount: 0, showApps: false, showDesktop: false}),
+        false,
+    );
 });
 
 test('any visible app, control, minimized tile, or stack prevents the empty state', () => {
