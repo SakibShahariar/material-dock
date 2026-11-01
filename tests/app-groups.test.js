@@ -18,10 +18,7 @@ test('normalizes labels and app IDs and removes duplicate IDs', () => {
 
 test('rejects empty labels, malformed IDs, and unavailable applications', () => {
     assert.equal(normalizeAppGroup('', ['org.gnome.Terminal.desktop'], available), null);
-    assert.equal(
-        normalizeAppGroup('Bad|Label', ['org.gnome.Terminal.desktop'], available),
-        null,
-    );
+    assert.equal(normalizeAppGroup('Bad|Label', ['org.gnome.Terminal.desktop'], available), null);
     assert.equal(normalizeAppGroup('Missing', ['missing.desktop'], available), null);
     assert.equal(normalizeAppGroup('Empty', [], available), null);
 });
