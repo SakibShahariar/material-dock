@@ -358,6 +358,13 @@ export default class MaterialDockPreferences extends ExtensionPreferences {
         addSwitchRow(
             tilesGroup,
             settings,
+            'show-section-separators',
+            'Show section separators',
+            'Separate visible stacks, Show Desktop, apps, and minimized windows',
+        );
+        addSwitchRow(
+            tilesGroup,
+            settings,
             'show-desktop-button',
             'Show Desktop button',
             'Show or hide the dock button; Show Desktop remains available from the context menu',
@@ -373,6 +380,7 @@ export default class MaterialDockPreferences extends ExtensionPreferences {
                 'show-running',
                 'show-show-apps-button',
                 'show-desktop-button',
+                'show-section-separators',
             ],
             'Reset window and content options',
             'Restore window filtering, previews, and dock content preferences',
