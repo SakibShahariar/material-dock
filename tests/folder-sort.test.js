@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 
 import {sortFolderEntries} from '../lib/folder-sort.js';
+import {collectFolderBatch} from '../lib/folder-enumeration.js';
 
 test('sorts names naturally and without case sensitivity', () => {
     const entries = [{name: 'file10'}, {name: 'File2'}, {name: 'file1'}];
@@ -61,4 +62,63 @@ test('falls back to name order for unknown modes and keeps equal entries stable'
         sortFolderEntries(entries, 'unknown').map(entry => entry.id),
         [3, 1, 2],
     );
+});
+
+test('collects eligible files and filters hidden entries and directories', () => {
+    const target = [];
+    const batch = [{directory: true}, {hidden: true}, {name: 'visible'}];
+    const result = collectFolderBatch(
+        target,
+        batch,
+        10,
+        entry => !entry.directory && !entry.hidden,
+    );
+
+    assert.equal(result.scanned, 3);
+    assert.equal(result.truncated, false);
+    assert.deepEqual(target, [batch[2]]);
+});
+
+test('stops collecting when the remaining scan budget is exhausted', () => {
+    const target = [];
+    const batch = [{id: 1}, {id: 2}, {id: 3}, {id: 4}];
+    const result = collectFolderBatch(target, batch, 3, () => true);
+
+    assert.equal(result.scanned, 3);
+    assert.equal(result.truncated, true);
+    assert.deepEqual(target, batch.slice(0, 3));
+});
+
+test('keeps an exactly full final batch complete', () => {
+    const target = [];
+    const batch = [{id: 1}, {id: 2}];
+    const result = collectFolderBatch(target, batch, 2, () => true);
+
+    assert.equal(result.scanned, 2);
+    assert.equal(result.truncated, false);
+    assert.equal(target.length, 2);
+});
+
+test('detects more entries when the scan budget is already exhausted', () => {
+    const target = [{id: 1}];
+    const result = collectFolderBatch(target, [{id: 2}], 0, () => true);
+
+    assert.equal(result.scanned, 0);
+    assert.equal(result.truncated, true);
+    assert.deepEqual(target, [{id: 1}]);
+});
+
+test('does not report truncation when a complete batch has no eligible files', () => {
+    const target = [];
+    const batch = [{directory: true}, {hidden: true}];
+    const result = collectFolderBatch(
+        target,
+        batch,
+        10,
+        entry => !entry.directory && !entry.hidden,
+    );
+
+    assert.equal(result.scanned, 2);
+    assert.equal(result.truncated, false);
+    assert.deepEqual(target, []);
 });
