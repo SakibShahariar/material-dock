@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 
-import {calculateAvailableDockWidth, calculateAutoFitIconSize} from '../lib/layout.js';
+import {\n    calculateAvailableDockWidth,\n    calculateAutoFitIconSize,\n    calculateMagnificationReserve,\n} from '../lib/layout.js';
 
 test('deducts only the dock edge margins from the monitor width', () => {
     assert.equal(calculateAvailableDockWidth(1920, 4), 1912);
@@ -50,4 +50,20 @@ test('falls back to valid icon sizes for non-finite measurements', () => {
 test('preserves small configured icons when no shrink is needed', () => {
     assert.equal(calculateAutoFitIconSize(16, 160, 160), 16);
     assert.equal(calculateAutoFitIconSize(20, 200, 200), 20);
+});
+
+test('reserves half the magnified icon overhang at each horizontal edge', () => {
+    assert.equal(calculateMagnificationReserve(48, 1.25), 6);
+    assert.equal(calculateMagnificationReserve(48, 2), 24);
+});
+
+test('does not reserve space when magnification is disabled or scale is invalid', () => {
+    assert.equal(calculateMagnificationReserve(48, 1), 0);
+    assert.equal(calculateMagnificationReserve(48, Number.NaN), 0);
+    assert.equal(calculateMagnificationReserve(Number.NaN, 2), 0);
+});
+
+test('bounds magnification reserve to the supported scale range', () => {
+    assert.equal(calculateMagnificationReserve(48, 0.5), 0);
+    assert.equal(calculateMagnificationReserve(48, 10), 48);
 });
