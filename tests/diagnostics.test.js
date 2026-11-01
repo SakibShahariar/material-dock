@@ -23,7 +23,9 @@ test('formats the documented diagnostic fields in a stable order', () => {
     });
 
     assert.match(report, /^Material Dock diagnostics/);
-    assert.ok(report.indexOf('GNOME Shell version: 50.1') < report.indexOf('Session type: wayland'));
+    const shellVersionIndex = report.indexOf('GNOME Shell version: 50.1');
+    const sessionTypeIndex = report.indexOf('Session type: wayland');
+    assert.ok(shellVersionIndex < sessionTypeIndex);
     assert.match(report, /Current icon size: 36/);
     assert.match(report, /Popover open: false/);
 });
