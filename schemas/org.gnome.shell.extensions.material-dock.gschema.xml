@@ -151,6 +151,10 @@
       <default>[]</default>
       <summary>Folders pinned to dock</summary>
     </key>
+    <key name="show-folder-counts" type="b">
+      <default>true</default>
+      <summary>Show file counts on folder stack tiles</summary>
+    </key>
     <key name="folder-sort" type="s">
       <default>'modified'</default>
       <choices>

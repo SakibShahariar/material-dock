@@ -623,7 +623,7 @@ export default class MaterialDockPreferences extends ExtensionPreferences {
             addResetRow(
                 folderGroup,
                 settings,
-                () => ['folder-stacks', 'folder-sort'],
+                () => ['folder-stacks', 'folder-sort', 'show-folder-counts'],
                 'Reset folder stacks',
                 'Remove pinned folders and restore the default sorting preference',
                 window,
@@ -635,6 +635,13 @@ export default class MaterialDockPreferences extends ExtensionPreferences {
 
         const folderSortGroup = new Adw.PreferencesGroup({title: 'Folder sorting'});
         extrasPage.add(folderSortGroup);
+        addSwitchRow(
+            folderSortGroup,
+            settings,
+            'show-folder-counts',
+            'Show folder item counts',
+            'Display the number of visible files on each folder stack tile',
+        );
         addComboRow(
             folderSortGroup,
             settings,
