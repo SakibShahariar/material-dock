@@ -50,10 +50,6 @@ jobs:
       - name: Check JavaScript formatting
         run: npm run format:check
 
-      - name: Show Prettier formatting diff
-        if: failure()
-        run: prettier prefs.js | diff -u prefs.js - || true
-
 
       - name: Check JavaScript syntax
         run: |
