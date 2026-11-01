@@ -1,7 +1,11 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 
-import {\n    calculateAvailableDockWidth,\n    calculateAutoFitIconSize,\n    calculateMagnificationReserve,\n} from '../lib/layout.js';
+import {
+    calculateAvailableDockWidth,
+    calculateAutoFitIconSize,
+    calculateMagnificationReserve,
+} from '../lib/layout.js';
 
 test('deducts only the dock edge margins from the monitor width', () => {
     assert.equal(calculateAvailableDockWidth(1920, 4), 1912);
