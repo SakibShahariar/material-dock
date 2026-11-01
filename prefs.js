@@ -656,9 +656,8 @@ export default class MaterialDockPreferences extends ExtensionPreferences {
 
         const refreshGroups = () => {
             clearGroupRows(groupGroup);
-            settings.get_strv('app-groups').forEach((entry, index, groups) =>
-                this._addGroupRow(groupGroup, settings, entry, index, groups.length),
-            );
+            for (const entry of settings.get_strv('app-groups'))
+                this._addGroupRow(groupGroup, settings, entry);
 
             const labelRow = new Adw.EntryRow({title: 'Group name…'});
             const idsRow = new Adw.EntryRow({title: 'App IDs (id1,id2,id3)…'});
@@ -837,7 +836,7 @@ export default class MaterialDockPreferences extends ExtensionPreferences {
         dialog.present();
     }
 
-    _addGroupRow(group, settings, entry, index, count) {
+    _addGroupRow(group, settings, entry) {
         const [label, ids = ''] = entry.split('|', 2);
         const row = new Adw.ActionRow({title: label, subtitle: ids});
         row.add_suffix(
