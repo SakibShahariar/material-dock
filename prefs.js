@@ -719,7 +719,11 @@ export default class MaterialDockPreferences extends ExtensionPreferences {
             const syncMonitorOptions = () => {
                 options = buildMonitorOptions(monitorModel.get_n_items());
                 updatingModel = true;
-                model.splice(0, model.get_n_items(), options.map(([label]) => label));
+                model.splice(
+                    0,
+                    model.get_n_items(),
+                    options.map(([label]) => label),
+                );
                 updatingModel = false;
                 syncFromSettings();
             };
