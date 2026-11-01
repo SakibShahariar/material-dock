@@ -28,10 +28,10 @@ test('replaces an existing group without mutating the original list', () => {
     const next = replaceAppGroup(groups, groups[0], 'Shell|org.gnome.Terminal.desktop');
 
     assert.deepEqual(next, ['Shell|org.gnome.Terminal.desktop', groups[1]]);
-    assert.deepEqual(
-        groups,
-        ['Tools|org.gnome.Terminal.desktop', 'Files|org.gnome.Nautilus.desktop'],
-    );
+    assert.deepEqual(groups, [
+        'Tools|org.gnome.Terminal.desktop',
+        'Files|org.gnome.Nautilus.desktop',
+    ]);
 });
 
 test('rejects replacing a missing or duplicate group', () => {
