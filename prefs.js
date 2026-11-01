@@ -5,6 +5,7 @@ import Gtk from 'gi://Gtk?version=4.0';
 import GLib from 'gi://GLib';
 import {ICON_SIZES} from './lib/constants.js';
 import {buildMonitorOptions} from './lib/monitor-options.js';
+import {moveAppGroup, normalizeAppGroup, replaceAppGroup} from './lib/app-groups.js';
 
 import {ExtensionPreferences} from 'resource:///org/gnome/Shell/Extensions/js/extensions/prefs.js';
 
@@ -174,6 +175,7 @@ function addResetRow(group, settings, keyProvider, title, subtitle, window, dest
 
 export default class MaterialDockPreferences extends ExtensionPreferences {
     fillPreferencesWindow(window) {
+        this._window = window;
         const settings = this.getSettings('org.gnome.shell.extensions.material-dock');
         window._settings = settings;
 
@@ -654,8 +656,9 @@ export default class MaterialDockPreferences extends ExtensionPreferences {
 
         const refreshGroups = () => {
             clearGroupRows(groupGroup);
-            for (const entry of settings.get_strv('app-groups'))
-                this._addGroupRow(groupGroup, settings, entry);
+            settings.get_strv('app-groups').forEach((entry, index, groups) =>
+                this._addGroupRow(groupGroup, settings, entry, index, groups.length),
+            );
 
             const labelRow = new Adw.EntryRow({title: 'Group name…'});
             const idsRow = new Adw.EntryRow({title: 'App IDs (id1,id2,id3)…'});
@@ -834,34 +837,92 @@ export default class MaterialDockPreferences extends ExtensionPreferences {
         dialog.present();
     }
 
-    _addGroupRow(group, settings, entry) {
-        const row = new Adw.ActionRow({title: entry});
+    _addGroupRow(group, settings, entry, index, count) {
+        const [label, ids = ''] = entry.split('|', 2);
+        const row = new Adw.ActionRow({title: label, subtitle: ids});
+        row.add_suffix(
+            makeIconButton('document-edit-symbolic', 'Edit group', () =>
+                this._editGroup(settings, entry),
+            ),
+        );
+        row.add_suffix(
+            makeIconButton('go-up-symbolic', 'Move group up', () =>
+                this._moveGroup(settings, entry, -1),
+            ),
+        );
+        row.add_suffix(
+            makeIconButton('go-down-symbolic', 'Move group down', () =>
+                this._moveGroup(settings, entry, 1),
+            ),
+        );
         row.add_suffix(
             makeIconButton('user-trash-symbolic', 'Remove', () => {
-                const groups = settings.get_strv('app-groups').filter(g => g !== entry);
-                settings.set_strv('app-groups', groups);
+                settings.set_strv(
+                    'app-groups',
+                    settings.get_strv('app-groups').filter(g => g !== entry),
+                );
             }),
         );
         group.add(row);
     }
 
-    _addGroup(settings, label, ids) {
-        label = label.trim();
-        const appIds = ids
-            .split(',')
-            .map(id => id.trim())
-            .filter(Boolean);
-        if (
-            !label ||
-            label.includes('|') ||
-            appIds.length === 0 ||
-            appIds.some(id => id.includes('|') || id.includes(','))
-        )
-            return false;
+    _editGroup(settings, entry) {
+        const [currentLabel, currentIds = ''] = entry.split('|', 2);
+        const dialog = new Gtk.Dialog({
+            title: 'Edit app group',
+            transient_for: this._window,
+            modal: true,
+        });
+        dialog.add_button('Cancel', Gtk.ResponseType.CANCEL);
+        dialog.add_button('Save', Gtk.ResponseType.ACCEPT);
 
-        const uniqueIds = [...new Set(appIds)];
+        const content = dialog.get_content_area();
+        const labelRow = new Adw.EntryRow({title: 'Group name'});
+        labelRow.set_text(currentLabel);
+        const idsRow = new Adw.EntryRow({title: 'Selected app IDs'});
+        idsRow.set_text(currentIds);
+        idsRow.add_suffix(
+            makeIconButton('view-app-grid-symbolic', 'Choose installed apps', () =>
+                this._chooseAppIds(dialog, idsRow),
+            ),
+        );
+        content.append(labelRow);
+        content.append(idsRow);
+
+        dialog.connect('response', (_dialog, response) => {
+            if (response === Gtk.ResponseType.ACCEPT) {
+                const availableIds = Gio.AppInfo.get_all()
+                    .filter(app => app.get_id() && app.should_show())
+                    .map(app => app.get_id());
+                const replacement = normalizeAppGroup(
+                    labelRow.get_text(),
+                    idsRow.get_text(),
+                    availableIds,
+                );
+                const next = replacement
+                    ? replaceAppGroup(settings.get_strv('app-groups'), entry, replacement)
+                    : null;
+                if (next) settings.set_strv('app-groups', next);
+            }
+            dialog.destroy();
+        });
+        dialog.present();
+    }
+
+    _moveGroup(settings, entry, offset) {
         const groups = settings.get_strv('app-groups');
-        const full = `${label}|${uniqueIds.join(',')}`;
+        const next = moveAppGroup(groups, entry, offset);
+        if (next !== groups) settings.set_strv('app-groups', next);
+    }
+
+    _addGroup(settings, label, ids) {
+        const availableIds = Gio.AppInfo.get_all()
+            .filter(app => app.get_id() && app.should_show())
+            .map(app => app.get_id());
+        const full = normalizeAppGroup(label, ids, availableIds);
+        if (!full) return false;
+
+        const groups = settings.get_strv('app-groups');
         if (groups.includes(full)) return false;
 
         groups.push(full);
