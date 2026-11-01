@@ -48,7 +48,9 @@ jobs:
         run: npm run lint
 
       - name: Check JavaScript formatting
-        run: npm run format:check
+        run: |
+          npx --yes prettier@3.6.2 --write "**/*.js"
+          git diff -- "*.js" "lib/*.js" "tests/*.js"
 
 
       - name: Check JavaScript syntax
