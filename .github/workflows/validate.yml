@@ -47,13 +47,6 @@ jobs:
       - name: Run ESLint
         run: npm run lint
 
-      - name: Show Prettier formatting diffs
-        run: |
-          for file in lib/section-separators.js tests/section-separators.test.js; do
-            npx prettier "$file" > "/tmp/$(basename "$file")"
-            diff -u "$file" "/tmp/$(basename "$file")" || true
-          done
-
       - name: Check JavaScript formatting
         run: npm run format:check
 
