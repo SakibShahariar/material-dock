@@ -1,11 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 
-import {
-    moveAppGroup,
-    normalizeAppGroup,
-    replaceAppGroup,
-} from '../lib/app-groups.js';
+import {moveAppGroup, normalizeAppGroup, replaceAppGroup} from '../lib/app-groups.js';
 
 const available = ['org.gnome.Terminal.desktop', 'org.gnome.Nautilus.desktop'];
 
@@ -31,17 +27,14 @@ test('rejects empty labels, malformed IDs, and unavailable applications', () => 
 });
 
 test('replaces an existing group without mutating the original list', () => {
-    const groups = [
-        'Tools|org.gnome.Terminal.desktop',
-        'Files|org.gnome.Nautilus.desktop',
-    ];
+    const groups = ['Tools|org.gnome.Terminal.desktop', 'Files|org.gnome.Nautilus.desktop'];
     const next = replaceAppGroup(groups, groups[0], 'Shell|org.gnome.Terminal.desktop');
 
     assert.deepEqual(next, ['Shell|org.gnome.Terminal.desktop', groups[1]]);
-    assert.deepEqual(groups, [
-        'Tools|org.gnome.Terminal.desktop',
-        'Files|org.gnome.Nautilus.desktop',
-    ]);
+    assert.deepEqual(
+        groups,
+        ['Tools|org.gnome.Terminal.desktop', 'Files|org.gnome.Nautilus.desktop'],
+    );
 });
 
 test('rejects replacing a missing or duplicate group', () => {
