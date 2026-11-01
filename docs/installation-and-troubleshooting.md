@@ -28,6 +28,8 @@ From the repository directory:
 
 The script stages the extension under the user's GNOME extensions directory, compiles the GSettings schema, and then replaces the installed directory. It attempts to enable the extension if `gnome-extensions` is available.
 
+There is not yet a published release archive or GNOME Extensions listing. Until the first release is published, install from a source checkout using the script above. Track release packaging in [issue #107](https://github.com/SakibShahariar/material-dock/issues/107).
+
 For a new installation on Wayland, log out and back in if the extension does not appear. Then enable it:
 
 ```sh
