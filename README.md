@@ -33,6 +33,8 @@ From the repository directory, run:
 
 The installer compiles the GSettings schema and installs the extension under `~/.local/share/gnome-shell/extensions/`. It attempts to enable the extension when `gnome-extensions` is available.
 
+For update, uninstall, reset, and troubleshooting instructions, see the [installation and support guide](docs/installation-and-troubleshooting.md).
+
 If a new installation does not appear in a Wayland session, log out and back in, then enable it from GNOME Extensions or run:
 
 ```sh
