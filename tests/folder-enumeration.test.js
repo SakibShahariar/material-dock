@@ -5,8 +5,17 @@ import {collectFolderBatch} from '../lib/folder-enumeration.js';
 
 test('collects visible files and skips directories and hidden entries', () => {
     const target = [];
-    const batch = [{name: 'folder', directory: true}, {name: '.hidden', hidden: true}, {name: 'file'}];
-    const result = collectFolderBatch(target, batch, 10, entry => !entry.directory && !entry.hidden);
+    const batch = [
+        {name: 'folder', directory: true},
+        {name: '.hidden', hidden: true},
+        {name: 'file'},
+    ];
+    const result = collectFolderBatch(
+        target,
+        batch,
+        10,
+        entry => !entry.directory && !entry.hidden,
+    );
 
     assert.equal(result.scanned, 3);
     assert.equal(result.truncated, false);
@@ -45,7 +54,12 @@ test('detects another batch after the scan limit is reached', () => {
 test('completes folders with no eligible files without reporting truncation', () => {
     const target = [];
     const batch = [{directory: true}, {hidden: true}];
-    const result = collectFolderBatch(target, batch, 10, entry => !entry.directory && !entry.hidden);
+    const result = collectFolderBatch(
+        target,
+        batch,
+        10,
+        entry => !entry.directory && !entry.hidden,
+    );
 
     assert.equal(result.scanned, 2);
     assert.equal(result.truncated, false);
