@@ -24,7 +24,7 @@ Persistent repository-specific record of commit-level CI checks and red-cross in
 
 - Repository: `SakibShahariar/material-dock`
 - Default branch: `main`
-- Checkpoint SHA: `a15053831d0d030399f68a78c6bc3064daa1e9a6`
+- Checkpoint SHA: `20def028600d72a3b68aed531274102647f94de8`
 - Initialized: 2026-11-02
 - Baseline: latest branch tip queried through combined commit-status endpoint; empty status list recorded as **unavailable**, not green/red. Older history was not retroactively audited during setup.
 - Next session: review commits after this checkpoint, including the next audit-ledger checkpoint commit; retain and revisit the red-cross history only if new evidence or regressions appear.
@@ -153,4 +153,9 @@ Reviewed the 30 commits immediately preceding the current audit-ledger commit, f
 - Commit: `a15053831d0d030399f68a78c6bc3064daa1e9a6` — `docs(maintenance): checkpoint verified Actions audit`
 - CI: [success](https://github.com/SakibShahariar/material-dock/actions/runs/41584251518)
 - Validate: [success](https://github.com/SakibShahariar/material-dock/actions/runs/41584251490)
+- Result: **green**, both push-triggered workflows completed successfully.
+
+- Commit: `20def028600d72a3b68aed531274102647f94de8` — `docs(maintenance): correct audit checkpoint`
+- CI: [success](https://github.com/SakibShahariar/material-dock/actions/runs/41584338863)
+- Validate: [success](https://github.com/SakibShahariar/material-dock/actions/runs/41584339032)
 - Result: **green**, both push-triggered workflows completed successfully.
