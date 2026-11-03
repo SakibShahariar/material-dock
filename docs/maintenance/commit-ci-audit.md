@@ -145,7 +145,12 @@ Reviewed the 30 commits immediately preceding the current audit-ledger commit, f
 - Validate: [success](https://github.com/SakibShahariar/material-dock/actions/runs/41583823461)
 - Result: **green**, both push-triggered workflows completed successfully.
 
+- Commit: `cfb52b17398add8034809057c99e66cc76f78201` — `docs(maintenance): record actual CI failures and fixes`
+- CI: [success](https://github.com/SakibShahariar/material-dock/actions/runs/41584180439)
+- Validate: [success](https://github.com/SakibShahariar/material-dock/actions/runs/41584180418)
+- Result: **green**, both push-triggered workflows completed successfully.
+
 ## Checkpoint
 
-- Checkpoint SHA: `9b01f66fbaaffa6357da4ffb2c653df5c766c0c3`
-- Next session: review commits after this checkpoint; retain the red-cross history and fix mapping above. The current ledger update will itself be reviewed in the next incremental audit.
+- Checkpoint SHA: `cfb52b17398add8034809057c99e66cc76f78201`
+- Next session: review commits after this checkpoint; retain the red-cross history and fix mapping above. The next ledger checkpoint commit will itself be reviewed in the following incremental audit.
