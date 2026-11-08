@@ -1,112 +1,66 @@
 # Material Dock
 
-A customizable dock replacement for GNOME Shell, inspired by OmaDock for Omarchy/Hyprland. Material Dock brings app launching, window management, and workspace controls together in a configurable top- or bottom-edge dock.
+A customizable dock replacement for **GNOME Shell**. Launch apps, manage windows, switch workspaces, and keep your favorite actions close at hand—all from a dock that fits your desktop.
 
 [![CI](https://github.com/SakibShahariar/material-dock/actions/workflows/ci.yml/badge.svg)](https://github.com/SakibShahariar/material-dock/actions/workflows/ci.yml)
 [![Validate](https://github.com/SakibShahariar/material-dock/actions/workflows/validate.yml/badge.svg)](https://github.com/SakibShahariar/material-dock/actions/workflows/validate.yml)
 
-## Features
+## What it does
 
-- **Window previews** — hover an app to see its windows, activate one, or close it. Middle-click can close a window; minimized windows appear as dock tiles that restore on click. Live thumbnail previews are not implemented yet.
-- **Zoom and wave effects** — magnify icons in place or extend the effect to neighboring icons.
-- **Intelligent autohide** — hide when windows overlap the dock, with configurable delay and an edge reveal strip; choose never-hide or always-hide modes too.
-- **Show Desktop** — use the dedicated desktop button or the dock context menu to minimize windows on the primary monitor and restore the windows tracked by that action.
-- **Flexible app actions** — configure click-to-minimize, window cycling, previews, and middle-click behavior.
-- **Workspace filtering** — optionally show running apps from the current workspace while keeping favorites available.
-- **Folder stacks and app groups** — open a folder’s recent files from a stack, or combine apps into a single tile with a multi-icon view.
-- **Preferences and quick controls** — configure behavior, appearance, position, and extras in the Adwaita preferences window; use the right-click menu for common actions.
-- **Visibility controls** — optionally hide the dock in Activities Overview or while a fullscreen window occupies its monitor.
+- **Window management** — Preview an app's open windows, switch between them, close windows, and restore minimized windows from the dock.
+- **Expressive icons** — Use in-place zoom or a neighboring-icon wave effect.
+- **Smart visibility** — Automatically hide when windows overlap the dock, with configurable delays and an edge reveal strip. Choose always-visible or always-hidden behavior too.
+- **App and workspace controls** — Configure click and middle-click actions, cycle windows, filter running apps by workspace, and keep favorites accessible.
+- **Folders and app groups** — Open recent files from folder stacks or combine related apps into a single dock item.
+- **Desktop controls** — Show the desktop and optionally hide the dock in Activities Overview or when a fullscreen window is active.
+
+Position the dock at the **top or bottom** edge and customize its behavior and appearance from the Adwaita preferences window.
 
 ## Compatibility
 
-The extension metadata currently declares GNOME Shell **47, 48, 49, and 50**. Declared versions are not a guarantee of complete runtime verification: GNOME Shell APIs and behavior must be checked in a real session. See the [GNOME session smoke-test checklist](docs/gnome-smoke-test.md).
+The extension metadata declares GNOME Shell **47–50**. This does not guarantee runtime compatibility on every version; GNOME Shell APIs and behavior need validation in a real desktop session. Live thumbnail previews are not implemented yet.
 
-Only the **top and bottom** screen edges are supported at present.
+See the [GNOME session smoke-test checklist](docs/gnome-smoke-test.md) for validation status and test steps.
 
 ## Install
 
-From the repository directory, run:
+Clone the repository and run the installer:
 
 ```sh
+git clone https://github.com/SakibShahariar/material-dock.git
+cd material-dock
 ./install.sh
 ```
 
-The installer compiles the GSettings schema and installs the extension under `~/.local/share/gnome-shell/extensions/`. It attempts to enable the extension when `gnome-extensions` is available.
+The installer compiles the GSettings schema and installs the extension in your user extensions directory. When available, it also attempts to enable the extension.
 
-For update, uninstall, reset, and troubleshooting instructions, see the [installation and support guide](docs/installation-and-troubleshooting.md).
-
-If a new installation does not appear in a Wayland session, log out and back in, then enable it from GNOME Extensions or run:
+If it does not appear in a Wayland session after installation, log out and back in, then enable **Material Dock** in GNOME Extensions. You can also run:
 
 ```sh
 gnome-extensions enable material-dock@SakibShahariar
 ```
 
-### Manual installation
+For upgrades, removal, reset, and troubleshooting, see the [installation guide](docs/installation-and-troubleshooting.md).
 
-If you prefer to install without the script:
+## Documentation
 
-```sh
-UUID=material-dock@SakibShahariar
-DEST="${XDG_DATA_HOME:-$HOME/.local/share}/gnome-shell/extensions/$UUID"
-mkdir -p "$DEST/schemas" "$DEST/lib"
-cp metadata.json extension.js prefs.js stylesheet.css "$DEST/"
-cp schemas/*.xml "$DEST/schemas/"
-cp lib/*.js "$DEST/lib/"
-glib-compile-schemas "$DEST/schemas/"
-gnome-extensions enable "$UUID"
-```
+- [Settings reference](docs/settings-reference.md) — every setting, default, and accepted value.
+- [Installation and troubleshooting](docs/installation-and-troubleshooting.md)
+- [GNOME session smoke tests](docs/gnome-smoke-test.md) — runtime validation checklist.
+- [Test coverage](docs/test-coverage.md) — coverage baseline and scope.
 
-## Configuration reference
+## Development
 
-See the [GSettings reference](docs/settings-reference.md) for every setting, its default, and allowed values.
-
-## Development and tests
-
-Requirements: Node.js 20 or newer for the unit-test suite, plus GNOME Shell and its development tools for live integration checks.
-
-Run automated tests and syntax checks:
+Run the automated test suite (Node.js 20+):
 
 ```sh
 npm test
 ```
 
-The test command also prints a Node coverage summary. See the [coverage baseline](docs/test-coverage.md); its percentages cover files loaded by tests, not the entire GNOME Shell extension.
+These tests and CI checks do not run the extension inside GNOME Shell or Mutter. Verify runtime behavior in a real session before claiming compatibility; use the [smoke-test checklist](docs/gnome-smoke-test.md).
 
-For an editable local checkout, link the repository into the extensions directory and compile its schema:
-
-```sh
-ln -s "$PWD" "${XDG_DATA_HOME:-$HOME/.local/share}/gnome-shell/extensions/material-dock@SakibShahariar"
-glib-compile-schemas schemas/
-```
-
-Re-enable the extension after changing files. The `Alt+F2` → `r` restart is available only on X11; on Wayland, log out and back in or use a nested `gnome-shell --devkit` session. To follow extension-related log messages:
-
-```sh
-journalctl -f -o cat | grep -i material-dock
-```
-
-**Important:** Node tests and CI static checks do not load GNOME Shell, Mutter, or libadwaita. Before claiming runtime compatibility for a Shell version, work through [the smoke-test checklist](docs/gnome-smoke-test.md) in a real session.
-
-## Project layout
-
-| Path | Purpose |
-| --- | --- |
-| `extension.js` | Extension entry point |
-| `prefs.js` | Adwaita preferences |
-| `lib/manager.js` | Lifecycle and monitor selection |
-| `lib/dock.js` | Dock container, position, and autohide |
-| `lib/dash.js` | App icon container and click/scroll behavior |
-| `lib/indicators.js` | Running, focused, and urgent indicators |
-| `lib/magnifier.js` | Zoom and wave effects |
-| `lib/intellihide.js` | Window-overlap visibility logic |
-| `lib/previews.js` | Window previews and minimized tiles |
-| `lib/stacks.js` | Folder stacks and app groups |
-| `lib/contextmenu.js` | Dock context menu |
-| `schemas/` | GSettings schema |
-| `stylesheet.css` | Dock styling |
-
-## License and attribution
+## License
 
 Material Dock is licensed under [GPL-2.0-or-later](LICENSE).
 
-`lib/dash.js` is based on GNOME Shell's `ui/dash.js` and retains its upstream GPL licensing and contributor attribution in the file header. Material Dock modifies that code and is **not an official GNOME Shell project**.
+`lib/dash.js` is based on GNOME Shell's `ui/dash.js` and retains its upstream licensing and contributor attribution in its file header. Material Dock is an independent project and is **not an official GNOME Shell project**.
