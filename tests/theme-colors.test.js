@@ -68,6 +68,15 @@ test('generates Matugen styling for all custom dock components without GNOME the
     assert.ok(!css.includes('@selected_'));
 });
 
+test('generates a stylesheet with balanced braces the Shell CSS parser accepts', () => {
+    const css = generateMatugenStylesheet(parseMatugenColors(completePalette));
+    const open = (css.match(/{/g) ?? []).length;
+    const close = (css.match(/}/g) ?? []).length;
+    assert.equal(open, close, `unbalanced braces: ${open} '{' vs ${close} '}'`);
+    assert.ok(css.trimEnd().endsWith('}'), 'stylesheet must end with the last rule');
+    assert.doesNotMatch(css, /}\s*}/, 'stylesheet must not contain an empty trailing block');
+});
+
 test('uses safe Material 3 fallbacks when optional Matugen roles are absent', () => {
     const css = generateMatugenStylesheet(parseMatugenColors(completePalette));
     assert.ok(css.includes('background-color: rgba(27, 33, 34, 0.94)'));
