@@ -41,7 +41,6 @@ test('ignores unrelated variables without rejecting a complete palette', () => {
     assert.equal(hasRequiredMatugenColors(colors), true);
 });
 
-
 test('generates Matugen styling for all custom dock components without GNOME theme tokens', () => {
     const css = generateMatugenStylesheet(parseMatugenColors(completePalette));
     for (const selector of [
