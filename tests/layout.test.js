@@ -20,6 +20,22 @@ test('keeps available width positive for tiny monitors and extreme margins', () 
     assert.equal(calculateAvailableDockWidth(320, -5), 320);
 });
 
+test('reserves magnification clearance only at the outer edge for aligned docks', () => {
+    assert.equal(calculateAvailableDockWidth(1920, 4, 24, 'start'), 1888);
+    assert.equal(calculateAvailableDockWidth(1920, 4, 24, 'end'), 1888);
+});
+
+test('reserves magnification clearance at both edges for centered docks', () => {
+    assert.equal(calculateAvailableDockWidth(1920, 4, 24, 'center'), 1864);
+    assert.equal(calculateAvailableDockWidth(320, 8, 12, 'center'), 280);
+});
+
+test('clamps invalid magnification clearance without producing invalid widths', () => {
+    assert.equal(calculateAvailableDockWidth(320, 8, -12, 'start'), 304);
+    assert.equal(calculateAvailableDockWidth(320, 8, Number.NaN, 'center'), 304);
+    assert.equal(calculateAvailableDockWidth(80, 100, 100, 'end'), 1);
+});
+
 test('keeps configured size when the dock already fits', () => {
     assert.equal(calculateAutoFitIconSize(48, 240, 220), 48);
 });
