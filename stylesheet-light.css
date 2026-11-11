@@ -1,0 +1,81 @@
+/* Light session variant. Imports the shared structure and dark palette from
+   stylesheet.css, then overrides every palette-dependent color. Keep these
+   overrides in sync with the color declarations in stylesheet.css. */
+@import url("stylesheet.css");
+
+.material-dock-card {
+    background-color: rgba(250, 250, 251, 0.84);
+    border: 1px solid rgba(34, 34, 38, 0.12);
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.18);
+}
+
+.material-dock-indicator-dot,
+.material-dock-indicator-bar {
+    background-color: rgba(34, 34, 38, 0.35);
+}
+
+.material-dock-indicator-dot.running,
+.material-dock-indicator-bar.running {
+    background-color: rgba(34, 34, 38, 0.75);
+}
+
+.material-dock-indicator-count {
+    color: #222226;
+    background-color: rgba(250, 250, 251, 0.55);
+}
+
+.material-dock-tile:hover,
+.material-dock-preview-button:hover,
+.material-dock-show-desktop:hover {
+    background-color: rgba(34, 34, 38, 0.12);
+}
+
+.material-dock-tile:active,
+.material-dock-preview-button:active,
+.material-dock-show-desktop:active {
+    background-color: rgba(34, 34, 38, 0.2);
+}
+
+.material-dock-tile-label {
+    color: rgba(34, 34, 38, 0.85);
+}
+
+.material-dock-min-tile {
+    background-color: rgba(34, 34, 38, 0.07);
+}
+
+.material-dock-min-tile:hover {
+    background-color: rgba(34, 34, 38, 0.15);
+}
+
+.material-dock-min-tile-label {
+    color: rgba(34, 34, 38, 0.9);
+}
+
+.material-dock-preview-panel {
+    background-color: rgba(250, 250, 251, 0.9);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+}
+
+.material-dock-preview-title {
+    color: rgba(34, 34, 38, 0.9);
+}
+
+.material-dock-preview-empty,
+.material-dock-preview-more,
+.material-dock-file-sub {
+    color: rgba(34, 34, 38, 0.6);
+}
+
+.material-dock-empty-state {
+    color: rgba(34, 34, 38, 0.65);
+}
+
+.material-dock-folder-count {
+    color: rgba(34, 34, 38, 0.7);
+    background-color: rgba(34, 34, 38, 0.08);
+}
+
+.material-dock-section-separator {
+    background-color: rgba(34, 34, 38, 0.18);
+}

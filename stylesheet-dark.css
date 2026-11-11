@@ -1,0 +1,4 @@
+/* Dark session variant. The shared structure and dark palette live in
+   stylesheet.css; this wrapper keeps the shell's variant-aware stylesheet
+   reload working when the system color scheme changes. */
+@import url("stylesheet.css");

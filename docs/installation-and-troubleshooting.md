@@ -42,7 +42,8 @@ gnome-extensions enable material-dock@SakibShahariar
 UUID=material-dock@SakibShahariar
 DEST="${XDG_DATA_HOME:-$HOME/.local/share}/gnome-shell/extensions/$UUID"
 mkdir -p "$DEST/schemas" "$DEST/lib"
-cp metadata.json extension.js prefs.js stylesheet.css "$DEST/"
+cp metadata.json extension.js prefs.js \
+    stylesheet.css stylesheet-dark.css stylesheet-light.css "$DEST/"
 cp schemas/*.xml "$DEST/schemas/"
 cp lib/*.js "$DEST/lib/"
 glib-compile-schemas "$DEST/schemas/"

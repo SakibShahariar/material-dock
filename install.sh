@@ -26,7 +26,8 @@ cleanup() {
 trap cleanup EXIT
 
 mkdir -p "$STAGED/schemas" "$STAGED/lib"
-cp "$SRC/metadata.json" "$SRC/extension.js" "$SRC/prefs.js" "$SRC/stylesheet.css" "$STAGED/"
+cp "$SRC/metadata.json" "$SRC/extension.js" "$SRC/prefs.js" \
+    "$SRC/stylesheet.css" "$SRC/stylesheet-dark.css" "$SRC/stylesheet-light.css" "$STAGED/"
 cp "$SRC"/schemas/*.xml "$STAGED/schemas/"
 cp "$SRC"/lib/*.js "$STAGED/lib/"
 glib-compile-schemas "$STAGED/schemas/"
