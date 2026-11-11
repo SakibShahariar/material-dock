@@ -3,14 +3,16 @@
 }
 
 .material-dock-card {
-    border-radius: 18px;
-    padding: 10px 12px 12px 12px;
-    box-shadow: 0 8px 24px alpha(@theme_bg_color, 0.35);
+    background-color: alpha(@theme_bg_color, 0.84);
+    border: 1px solid alpha(@theme_fg_color, 0.12);
+    border-radius: 20px;
+    padding: 12px 14px;
+    box-shadow: 0 10px 28px alpha(@theme_bg_color, 0.38);
     selection-background-color: transparent;
 }
 
 #material-dock-box {
-    spacing: 6px;
+    spacing: 8px;
 }
 
 /* Icons are AppDisplay.AppIcon (GNOME 50) which carries `.overview-tile`.
@@ -141,9 +143,9 @@
 .material-dock-min-tile {
     border-radius: 10px;
     background-color: alpha(@theme_fg_color, 0.07);
-    padding: 4px 3px;
+    padding: 6px;
     margin: 0 1px;
-    max-width: 96px;
+    max-width: 144px;
     min-width: 64px;
 }
 
@@ -152,9 +154,9 @@
 }
 
 .material-dock-min-tile-label {
-    font-size: 10px;
+    font-size: 11px;
     color: alpha(@theme_fg_color, 0.9);
-    max-width: 56px;
+    max-width: 88px;
 }
 
 .material-dock-min-tile-close {

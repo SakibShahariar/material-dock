@@ -71,3 +71,20 @@ test('bounds magnification reserve to the supported scale range', () => {
     assert.equal(calculateMagnificationReserve(48, 0.5), 0);
     assert.equal(calculateMagnificationReserve(48, 10), 48);
 });
+
+
+test('scales app spacing with the fitted icon size', async () => {
+    const {calculateDockItemSpacing} = await import('../lib/layout.js');
+    assert.equal(calculateDockItemSpacing(48), 12);
+    assert.equal(calculateDockItemSpacing(32), 8);
+    assert.equal(calculateDockItemSpacing(16), 8);
+    assert.equal(calculateDockItemSpacing(Number.NaN), 8);
+});
+
+test('keeps minimized window icons visible at the smallest fitted size', async () => {
+    const {calculateMinimizedIconSize} = await import('../lib/layout.js');
+    assert.equal(calculateMinimizedIconSize(48), 34);
+    assert.equal(calculateMinimizedIconSize(32), 18);
+    assert.equal(calculateMinimizedIconSize(16), 16);
+    assert.equal(calculateMinimizedIconSize(Number.NaN), 16);
+});
