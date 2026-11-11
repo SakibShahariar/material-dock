@@ -15,7 +15,7 @@
 }
 
 #material-dock-box {
-    spacing: 8px;
+    spacing: 10px;
 }
 
 /* Icons are AppDisplay.AppIcon (GNOME 50) which carries `.overview-tile`.
@@ -62,15 +62,25 @@
     box-shadow: none;
 }
 
+/* Keep the GNOME favorites/running divider visually consistent with the
+   dock's own section separators instead of inheriting the shell dash styling. */
+#material-dock .dash-separator {
+    background-color: rgba(255, 255, 255, 0.18);
+    width: 1px;
+    height: 24px;
+    margin: 0 6px;
+    padding: 0;
+}
+
 /* Running indicators */
 .material-dock-indicator {
-    margin-bottom: 2px;
+    margin-top: 3px;
+    margin-bottom: 0;
 }
 
 .material-dock-indicator-dot {
     background-color: rgba(255, 255, 255, 0.35);
     border-radius: 4px;
-    -st-icon-style: symbolic;
 }
 
 .material-dock-indicator-dot.running {
