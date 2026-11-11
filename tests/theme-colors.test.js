@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 
-import {hasRequiredMatugenColors, parseMatugenColors} from '../lib/matugen-colors.js';
+import {generateMatugenStylesheet, hasRequiredMatugenColors, parseMatugenColors} from '../lib/matugen-colors.js';
 
 const completePalette = `
 --surface_container: #1b2122;
@@ -35,4 +35,37 @@ test('rejects non-hex values for required palette colors', () => {
 test('ignores unrelated variables without rejecting a complete palette', () => {
     const colors = parseMatugenColors(`${completePalette}--extra_color: #123456;`);
     assert.equal(hasRequiredMatugenColors(colors), true);
+});
+
+ 
+test('generates Matugen styling for all custom dock components without GNOME theme tokens', () => {
+    const css = generateMatugenStylesheet(parseMatugenColors(completePalette));
+    for (const selector of [
+        '.material-dock-card',
+        '.material-dock-indicator-dot',
+        '.material-dock-indicator-bar',
+        '.material-dock-indicator-count',
+        '.material-dock-tile:hover',
+        '.material-dock-min-tile',
+        '.material-dock-preview-panel',
+        '.material-dock-preview-button:hover',
+        '.material-dock-preview-close:hover',
+        '.material-dock-preview-empty',
+        '.material-dock-file-sub',
+        '.material-dock-show-desktop:hover',
+        '.material-dock-empty-state',
+        '.material-dock-folder-count',
+        '.material-dock-section-separator',
+    ]) {
+        assert.ok(css.includes(selector), `missing Matugen selector: ${selector}`);
+    }
+    assert.ok(css.includes('#a8c7fa'));
+    assert.ok(css.includes('#f2b8b5'));
+    assert.ok(!css.includes('@theme_'));
+    assert.ok(!css.includes('@selected_'));
+});
+
+test('uses safe Material 3 fallbacks when optional Matugen roles are absent', () => {
+    const css = generateMatugenStylesheet(parseMatugenColors(completePalette));
+    assert.ok(css.includes('background-color: rgba(27, 33, 34, 0.94)'));
 });

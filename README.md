@@ -14,7 +14,7 @@ A customizable dock replacement for **GNOME Shell**. Launch apps, manage windows
 - **Folders and app groups** — Open recent files from folder stacks or combine related apps into a single dock item.
 - **Desktop controls** — Show the desktop and optionally hide the dock in Activities Overview or when a fullscreen window is active.
 
-Position the dock at the **top or bottom** edge and customize its behavior and appearance from the Adwaita preferences window.
+Position the dock at the **top or bottom** edge and customize its behavior and appearance from the Adwaita preferences window. When `~/.config/matugen/matugen-colors.css` contains the required Material 3 color roles, Material Dock applies that palette to its surface, indicators, tiles, previews, labels, and controls. It watches the file for changes and falls back to the GNOME Shell theme when the Matugen palette is missing or incomplete.
 
 ## Compatibility
 
