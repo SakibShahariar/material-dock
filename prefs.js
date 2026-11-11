@@ -188,7 +188,10 @@ export default class MaterialDockPreferences extends ExtensionPreferences {
         window.default_height = 640;
 
         // -------- Behavior --------
-        const behaviorPage = new Adw.PreferencesPage({title: 'Behavior'});
+        const behaviorPage = new Adw.PreferencesPage({
+            title: 'Behavior',
+            icon_name: 'preferences-system-symbolic',
+        });
         window.add(behaviorPage);
 
         const resetGroup = new Adw.PreferencesGroup({title: 'Reset settings'});
@@ -388,7 +391,10 @@ export default class MaterialDockPreferences extends ExtensionPreferences {
         );
 
         // -------- Appearance --------
-        const appearancePage = new Adw.PreferencesPage({title: 'Appearance'});
+        const appearancePage = new Adw.PreferencesPage({
+            title: 'Appearance',
+            icon_name: 'video-display-symbolic',
+        });
         window.add(appearancePage);
 
         const appearanceGroup = new Adw.PreferencesGroup({title: 'Icons'});
@@ -518,7 +524,10 @@ export default class MaterialDockPreferences extends ExtensionPreferences {
         );
 
         // -------- Position --------
-        const positionPage = new Adw.PreferencesPage({title: 'Position'});
+        const positionPage = new Adw.PreferencesPage({
+            title: 'Position',
+            icon_name: 'video-single-display-symbolic',
+        });
         window.add(positionPage);
 
         const positionGroup = new Adw.PreferencesGroup({title: 'Placement'});
@@ -584,7 +593,10 @@ export default class MaterialDockPreferences extends ExtensionPreferences {
         );
 
         // -------- Extras --------
-        const extrasPage = new Adw.PreferencesPage({title: 'Extras'});
+        const extrasPage = new Adw.PreferencesPage({
+            title: 'Extras',
+            icon_name: 'preferences-other-symbolic',
+        });
         window.add(extrasPage);
 
         const folderGroup = new Adw.PreferencesGroup({
