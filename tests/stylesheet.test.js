@@ -66,10 +66,10 @@ test('variant stylesheets import the shared base stylesheet', () => {
 test('the base stylesheet themes the dock with valid Shell colors', () => {
     assert.match(baseStylesheet, /\.material-dock-card\s*{[^}]*background-color:\s*rgba\(/s);
     assert.match(baseStylesheet, /-st-accent-color/);
-    assert.match(baseStylesheet, /border-radius:\\s*18px/);
-    assert.match(baseStylesheet, /padding:\\s*9px 12px/);
-    assert.match(baseStylesheet, /\\.material-dock-indicator-dot\\s*{[^}]*border-radius:\\s*50%/s);
-    assert.match(baseStylesheet, /\\.material-dock-indicator\\s*{[^}]*margin-top:\\s*1px/s);
+    assert.match(baseStylesheet, /border-radius:\s*18px/);
+    assert.match(baseStylesheet, /padding:\s*9px 12px/);
+    assert.match(baseStylesheet, /\.material-dock-indicator-dot\s*{[^}]*border-radius:\s*50%/s);
+    assert.match(baseStylesheet, /\.material-dock-indicator\s*{[^}]*margin-top:\s*1px/s);
     assert.doesNotMatch(baseStylesheet, /@selected_bg_color/);
 });
 
