@@ -12,9 +12,9 @@ test('source comments contain no literal \\n escapes that swallow code', () => {
         if (!name.endsWith('.js')) continue;
         if (name.startsWith('.git/') || name.startsWith('node_modules/')) continue;
 
-        const lines = readFileSync(new URL(name, root), 'utf8').split('\\n');
+        const lines = readFileSync(new URL(name, root), 'utf8').split('\n');
         lines.forEach((line, index) => {
-            if (/\\\\n\\s+\\/\\//.test(line)) broken.push(`${name}:${index + 1}`);
+            if (/\\n\s+\/\//.test(line)) broken.push(\`\${name}:\${index + 1}\`);
         });
     }
 
