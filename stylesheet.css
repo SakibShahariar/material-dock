@@ -6,16 +6,16 @@
    stylesheet-light.css imports this file and overrides the palette for light
    sessions; keep all color declarations here in sync with that file. */
 .material-dock-card {
-    background-color: rgba(54, 54, 58, 0.84);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: 20px;
-    padding: 12px 14px;
-    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.38);
+    background-color: rgba(54, 54, 58, 0.78);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 18px;
+    padding: 9px 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.32);
     selection-background-color: transparent;
 }
 
 #material-dock-box {
-    spacing: 10px;
+    spacing: 8px;
 }
 
 /* Icons are AppDisplay.AppIcon (GNOME 50) which carries `.overview-tile`.
@@ -65,22 +65,22 @@
 /* Keep the GNOME favorites/running divider visually consistent with the
    dock's own section separators instead of inheriting the shell dash styling. */
 #material-dock .dash-separator {
-    background-color: rgba(255, 255, 255, 0.18);
+    background-color: rgba(255, 255, 255, 0.22);
     width: 1px;
-    height: 24px;
-    margin: 0 6px;
+    height: 20px;
+    margin: 0 4px;
     padding: 0;
 }
 
 /* Running indicators */
 .material-dock-indicator {
-    margin-top: 3px;
+    margin-top: 1px;
     margin-bottom: 0;
 }
 
 .material-dock-indicator-dot {
     background-color: rgba(255, 255, 255, 0.35);
-    border-radius: 4px;
+    border-radius: 50%;
 }
 
 .material-dock-indicator-dot.running {
@@ -90,7 +90,7 @@
 .material-dock-indicator-dot.active-bar,
 .material-dock-indicator-dot.focused {
     background-color: -st-accent-color;
-    border-radius: 4px;
+    border-radius: 50%;
     border: 1px solid rgba(0, 0, 0, 0.4);
 }
 
@@ -279,6 +279,6 @@
 .material-dock-section-separator {
     background-color: rgba(255, 255, 255, 0.18);
     border-radius: 1px;
-    margin: 0 2px;
+    margin: 0 4px;
     width: 1px;
 }
