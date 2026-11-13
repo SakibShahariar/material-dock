@@ -14,7 +14,7 @@ test('source comments contain no literal \\n escapes that swallow code', () => {
 
         const lines = readFileSync(new URL(name, root), 'utf8').split('\n');
         lines.forEach((line, index) => {
-            if (/\\n\s+\/\//.test(line)) broken.push(\`\${name}:\${index + 1}\`);
+            if (/\\n\s+\/\//.test(line)) broken.push(name + ':' + (index + 1));
         });
     }
 
