@@ -159,3 +159,59 @@ Reviewed the 30 commits immediately preceding the current audit-ledger commit, f
 - CI: [success](https://github.com/SakibShahariar/material-dock/actions/runs/41584338863)
 - Validate: [success](https://github.com/SakibShahariar/material-dock/actions/runs/41584339032)
 - Result: **green**, both push-triggered workflows completed successfully.
+
+
+## Incremental audit: 2026-11-03 checkpoint through 2026-11-13
+
+Reviewed the 38 commits after the prior checkpoint `20def028600d72a3b68aed531274102647f94de8` through the current `main` head. Statuses below are from observed push-triggered Actions runs. **unavailable** means no matching run was exposed in the retrieved first 100 Actions records; it is not a pass. The recent red Validate results were formatting failures, not GNOME runtime checks. The 2026-11-13 visual change also exposed a stale Matugen opacity assertion; the corrected test and source-hygiene formatting are green on the final checkpoint commit.
+
+| Commit SHA | Subject | Result | Actions evidence |
+|---|---|---|---|
+| `fe1959b99342301eea4abc48f7b056bf28e41cd1` | fix(test): correct source hygiene newline matcher | **green** | CI 43398814880; Validate 43398814937 |
+| `6ad5a7813e61f5ac508cca16457ac2926c109285` | fix(test): correct source hygiene newline matcher | **red** | CI 43398781540; Validate 43398782104 |
+| `5cf631efbf97434f78827578d149fa9225fbf639` | style(test): simplify source hygiene regression check | **red** | CI 43398735663; Validate 43398735514 |
+| `6cf43f68335156ffb5a4936862e44a9f841a0495` | test(theme): update Matugen surface opacity expectation | **red** | CI 43398640894 success; Validate 43398640890 failure |
+| `4562aaf801a9f9ee7cf5749eaa7a1f861d44c781` | fix(validation): restore formatting and dock style assertions | **red** | CI 43398514988; Validate 43398514862 |
+| `750f686ff1b0be17fa69b211071bb987234e61e7` | style(dock): refine floating dock surface and indicators | **red** | CI 43398352621; Validate 43398352506 |
+| `5b76b5410328c38beb8b9d15bad8dfcb323beaa5` | fix: avoid app name lookup during window teardown | **red** | CI 43160848111 success; Validate 43160848104 failure |
+| `5924e70e383915e95b0989a3220c87120ae4b08f` | fix: avoid shell abort for closed window-backed apps | **red** | CI 43160443437 success; Validate 43160443586 failure |
+| `d07630cbe3babb533d74cec311006e7ad23bf9c9` | fix(dock): normalize icon spacing and separators | **red** | CI 43028689500 success; Validate 43028689544 failure |
+| `b526a32a26c8fac73cb5f0d20e6f7317ea7aadbd` | chore(metadata): declare Shell 51 support | **red** | CI 43026698268 success; Validate 43026698207 failure |
+| `565f0b4e6e371850eec5b63b19317faf2d189c63` | fix(extension): load the stylesheet through St.Theme on Shell 51 | **unavailable** | No workflow run observed in the retrieved Actions page |
+| `8cf4f425b0e0ae81f6a462a37ff6080595012ff7` | feat(prefs): add icons to the preference page tabs | **unavailable** | No workflow run observed in the retrieved Actions page |
+| `b65ac74daadf6846c38f906179a667223c09cd62` | fix(runtime): repair Shell 51 hover magnifier and accessible description | **unavailable** | No workflow run observed in the retrieved Actions page |
+| `ab3b6c6d6af139f2f8d5bed372d8e531134142b5` | fix(theme): remove stray closing brace from generated Matugen CSS | **unavailable** | No workflow run observed in the retrieved Actions page |
+| `6b62d94296509ea191f75cdb23912fb0c3185183` | fix(stylesheet): use St-parseable colors and ship light/dark variants | **unavailable** | No workflow run observed in the retrieved Actions page |
+| `78608c07125a8373a822e604357878ebbdeb8cd4` | fix(layout): align reserve expression with project formatting (#72) | **green** | CI 43012115906; Validate 43012115912 |
+| `6d92bb15e9c3f9d5c05275dd3197dbe7fada27f4` | style(layout): format adaptive reserve expression (#72) | **red** | CI 43012028307 success; Validate 43012028265 failure |
+| `ee0b5978b01d70713d8bce3a440b0931fd823230` | fix(layout): clarify alignment reserve calculation (#72) | **red** | CI 43011921003 success; Validate 43011921045 failure |
+| `36de5317a4a386fe6306d986dbcbef5379d15036` | fix(layout): account for aligned magnification bounds (#72) | **red** | CI 43011688029 success; Validate 43011688049 failure |
+| `309fad13c73e1c1df1015612aa93a970df456050` | chore(format): exclude generated Matugen stylesheet template | **green** | CI 42980509571; Validate 42980509562 |
+| `6c3b47314ba02faef16ac0337b8de287fbd8421e` | style(theme): space Matugen palette initialization | **red** | CI 42980416367 success; Validate 42980416260 failure |
+| `8099c060ed948d73ce20ceb4f4dd0f1e192a48dc` | refactor(theme): format Matugen stylesheet generation | **red** | CI 42980311235 success; Validate 42980311416 failure |
+| `e5178bfa956141b33f254d36a9bfd8b54cbaebcf` | style(theme): separate Matugen parser declarations | **red** | CI 42980172224 success; Validate 42980172275 failure |
+| `1cdc00d4c45e69024af9d5aecf112bdab6d85589` | style(theme): preserve generated palette rules formatting | **red** | CI 42980093806 success; Validate 42980093781 failure |
+| `8507c03f078e2f939baa25d26a320957d7751e1c` | style(theme): normalize Matugen helper formatting | **red** | CI 42979977209 success; Validate 42979977407 failure |
+| `6364a67984ec915799add851406e872be348643e` | style(theme): format Matugen palette implementation | **red** | CI 42979860367 success; Validate 42979860300 failure |
+| `18910cebfe73d37539976291c77ec6debad8c1e6` | test(theme): cover complete Matugen dock palette | **red** | CI 42979658363 success; Validate 42979658452 failure |
+| `bcb921c5334fdf2b83685164f22a4299915742ce` | fix(theme): apply Matugen Material 3 roles across dock UI | **red** | CI 42979607918 success; Validate 42979607823 failure |
+| `db73476c35cb3de38b74c49e7b953be76ada755b` | style: format responsive layout helpers and tests | **green** | CI 42978413882; Validate 42978413783 |
+| `21d76eacd5fe52d92d1e5649164f226cf06c3702` | fix(dock): restore repository tree with responsive dock updates | **red** | CI 42978311885 success; Validate 42978311970 failure |
+| `2c73659c8bfab6294139762ca23809e336ecb554` | fix(dock): improve responsive sizing and visual balance | **unavailable** | No workflow run observed in the retrieved Actions page |
+| `8bf5c8fdd471616c32d72256e237fd490c1a0cca` | fix(stylesheet): remove parser-triggering comment | **green** | CI 42759819320; Validate 42759818870 |
+| `058d955a7ab07458db8fd450c8543fe4a8682a8b` | fix(autohide): replace removed pointer watcher API | **green** | CI 42692321142; Validate 42692321527 |
+| `61421f892f4f742b4b0d06adedbf0609902fdf0d` | docs: modernize Material Dock README | **green** | CI 42512484339; Validate 42512484341 |
+| `d1649f5ee770ab0ada8f9e0befc5f382dbfb6454` | docs(agents): clarify acceptance criteria evidence | **green** | CI 41864245969; Validate 41864245970 |
+| `10dd3f44eea65415869365a501bfe4422da14d8a` | docs(agents): define administrative commit hygiene | **green** | CI 41597760804; Validate 41597760789 |
+| `6224edce3550a5123829f65cdc3bd7398fbceb8b` | docs(maintenance): split implementation-ready issue triage | **green** | CI 41594828500; Validate 41594828501 |
+| `4a1be3f1cbc83204bca6ce8464286f42a0be750b` | docs(maintenance): record final checkpoint verification | **green** | CI 41584427537; Validate 41584427607 |
+
+### 2026-11-13 visual polish follow-up
+
+- `750f686ff1b0be17fa69b211071bb987234e61e7`: both workflows failed. CI exposed an incorrect stylesheet-regex assertion; Validate exposed existing Prettier failures in `extension.js` and `tests/source-hygiene.test.js`.
+- `4562aaf801a9f9ee7cf5749eaa7a1f861d44c781`: both workflows failed while the source-hygiene formatter issue and test matcher were still unresolved.
+- `6cf43f68335156ffb5a4936862e44a9f841a0495`: CI passed; Validate remained red on source-hygiene formatting.
+- `5cf631efbf97434f78827578d149fa9225fbf639` and `6ad5a7813e61f5ac508cca16457ac2926c109285`: interim source-hygiene rewrites still failed CI/Validate and are retained as red history.
+- `fe1959b99342301eea4abc48f7b056bf28e41cd1`: final correction; CI and Validate both completed successfully. Validate confirms Prettier, ESLint, JavaScript syntax, all unit tests, schema checks, and installer checks passed.
+
+Checkpoint advanced to `fe1959b99342301eea4abc48f7b056bf28e41cd1` after this review. The older red entries above remain recorded rather than being relabeled green.
