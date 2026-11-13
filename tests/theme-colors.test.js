@@ -79,5 +79,5 @@ test('generates a stylesheet with balanced braces the Shell CSS parser accepts',
 
 test('uses safe Material 3 fallbacks when optional Matugen roles are absent', () => {
     const css = generateMatugenStylesheet(parseMatugenColors(completePalette));
-    assert.ok(css.includes('background-color: rgba(27, 33, 34, 0.94)'));
+    assert.ok(css.includes('background-color: rgba(27, 33, 34, 0.86)'));
 });

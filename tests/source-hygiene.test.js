@@ -24,9 +24,5 @@ test('source comments contain no literal \\n escapes that swallow code', () => {
         }
     }
 
-    assert.deepEqual(
-        broken,
-        [],
-        `literal \\n inside comments: ${broken.join(', ')}`,
-    );
+    assert.deepEqual(broken, [], `literal \\n inside comments: ${broken.join(', ')}`);
 });
