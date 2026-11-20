@@ -214,7 +214,7 @@ export default class MaterialDockPreferences extends ExtensionPreferences {
             settings,
             'click-action',
             'Click action',
-            'What happens when clicking a running app icon',
+            'Click behavior',
             [
                 ['Focus or minimize', 'focus-or-minimize'],
                 ['Focus window', 'focus'],
@@ -230,7 +230,7 @@ export default class MaterialDockPreferences extends ExtensionPreferences {
             settings,
             'middle-click-action',
             'Middle-click action',
-            'Choose whether middle-click opens a new window or activates the app',
+            'Middle-click behavior',
             [
                 ['Open new window', 'new-window'],
                 ['Activate app', 'activate'],
@@ -242,7 +242,7 @@ export default class MaterialDockPreferences extends ExtensionPreferences {
             settings,
             'scroll-action',
             'Scroll action',
-            'What happens when scrolling over a dock icon',
+            'Scroll behavior',
             [
                 ['Cycle windows', 'cycle-windows'],
                 ['Switch workspace', 'switch-workspace'],
@@ -255,7 +255,7 @@ export default class MaterialDockPreferences extends ExtensionPreferences {
             settings,
             'autohide-mode',
             'Autohide mode',
-            'Intelligent hides the dock only when a window overlaps it',
+            'Hide only when a window overlaps',
             [
                 ['Never hide', 'never'],
                 ['Auto hide', 'always'],
@@ -427,7 +427,7 @@ export default class MaterialDockPreferences extends ExtensionPreferences {
             settings,
             'icon-size',
             'Icon size',
-            'Size of app icons on the dock',
+            'Icon size in pixels',
             ICON_SIZES,
         );
 
@@ -444,7 +444,7 @@ export default class MaterialDockPreferences extends ExtensionPreferences {
             settings,
             'running-indicator',
             'Running indicator',
-            'How running apps are marked',
+            'Marker style',
             [
                 ['Dots', 'dots'],
                 ['Bar', 'bars'],
@@ -476,7 +476,7 @@ export default class MaterialDockPreferences extends ExtensionPreferences {
             settings,
             'magnify-effect',
             'Effect',
-            'Zoom grows the icon in place, wave also grows its neighbors',
+            'Zoom or wave effect',
             [
                 ['Zoom', 'zoom'],
                 ['Wave', 'wave'],
@@ -538,7 +538,7 @@ export default class MaterialDockPreferences extends ExtensionPreferences {
             settings,
             'dock-position',
             'Dock position',
-            'Place at the bottom or top of the screen',
+            'Top or bottom edge',
             [
                 ['Bottom', 'bottom'],
                 ['Top', 'top'],
@@ -550,7 +550,7 @@ export default class MaterialDockPreferences extends ExtensionPreferences {
             settings,
             'dock-alignment',
             'Alignment',
-            'Where along the edge the dock sits',
+            'Position along the edge',
             [
                 ['Start', 'start'],
                 ['Center', 'center'],
@@ -667,7 +667,7 @@ export default class MaterialDockPreferences extends ExtensionPreferences {
             settings,
             'folder-sort',
             'Sort files by',
-            'Choose the order used inside folder stack popovers',
+            'Order inside folder stacks',
             [
                 ['Name (A–Z)', 'name'],
                 ['Recently modified', 'modified'],
@@ -725,7 +725,7 @@ export default class MaterialDockPreferences extends ExtensionPreferences {
         const model = new Gtk.StringList({strings: options.map(([label]) => label)});
         const row = new Adw.ComboRow({
             title: 'Monitor',
-            subtitle: 'Choose which display hosts the dock',
+            subtitle: 'Display hosting the dock',
             model,
         });
         group.add(row);
