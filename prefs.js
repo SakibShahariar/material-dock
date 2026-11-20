@@ -209,21 +209,14 @@ export default class MaterialDockPreferences extends ExtensionPreferences {
         const behaviorGroup = new Adw.PreferencesGroup({title: 'Dock behavior'});
         behaviorPage.add(behaviorGroup);
 
-        addComboRow(
-            behaviorGroup,
-            settings,
-            'click-action',
-            'Click action',
-            'Click behavior',
-            [
-                ['Focus or minimize', 'focus-or-minimize'],
-                ['Focus window', 'focus'],
-                ['Toggle minimize all', 'toggle-minimize'],
-                ['Cycle windows', 'cycle-windows'],
-                ['Show previews', 'previews'],
-                ['Open new window', 'launch'],
-            ],
-        );
+        addComboRow(behaviorGroup, settings, 'click-action', 'Click action', 'Click behavior', [
+            ['Focus or minimize', 'focus-or-minimize'],
+            ['Focus window', 'focus'],
+            ['Toggle minimize all', 'toggle-minimize'],
+            ['Cycle windows', 'cycle-windows'],
+            ['Show previews', 'previews'],
+            ['Open new window', 'launch'],
+        ]);
 
         addComboRow(
             behaviorGroup,
@@ -237,18 +230,11 @@ export default class MaterialDockPreferences extends ExtensionPreferences {
             ],
         );
 
-        addComboRow(
-            behaviorGroup,
-            settings,
-            'scroll-action',
-            'Scroll action',
-            'Scroll behavior',
-            [
-                ['Cycle windows', 'cycle-windows'],
-                ['Switch workspace', 'switch-workspace'],
-                ['Nothing', 'nothing'],
-            ],
-        );
+        addComboRow(behaviorGroup, settings, 'scroll-action', 'Scroll action', 'Scroll behavior', [
+            ['Cycle windows', 'cycle-windows'],
+            ['Switch workspace', 'switch-workspace'],
+            ['Nothing', 'nothing'],
+        ]);
 
         addComboRow(
             behaviorGroup,
@@ -471,18 +457,11 @@ export default class MaterialDockPreferences extends ExtensionPreferences {
             'Grow icons toward the cursor',
         );
 
-        addComboRow(
-            magnifyGroup,
-            settings,
-            'magnify-effect',
-            'Effect',
-            'Zoom or wave effect',
-            [
-                ['Zoom', 'zoom'],
-                ['Wave', 'wave'],
-                ['Off', 'off'],
-            ],
-        );
+        addComboRow(magnifyGroup, settings, 'magnify-effect', 'Effect', 'Zoom or wave effect', [
+            ['Zoom', 'zoom'],
+            ['Wave', 'wave'],
+            ['Off', 'off'],
+        ]);
 
         const magnifyScaleRow = addSpinRow(
             magnifyGroup,
